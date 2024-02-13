@@ -108,6 +108,7 @@ namespace Minigis_Surkov
                     {100, 400}, 
                     {200, 700}
                 };
+                testGridLayer.findMinMaxNodeValue();
 
                 testLayer.map = this;
                 appendLayer(testLayer);
@@ -423,6 +424,20 @@ namespace Minigis_Surkov
                 double s_ = Math.Min(dx, dy);
                 scale *= s_ * .95;
                 Refresh();
+            }
+
+            redrawGridLayers();
+        }
+
+        private void redrawGridLayers()
+        {
+            foreach (Layer layer in layers)
+            {
+                if (layer is GridLayer)
+                {
+                    GridLayer gridLayer = (GridLayer)layer;
+                    gridLayer.createBitmap();
+                }
             }
         }
 

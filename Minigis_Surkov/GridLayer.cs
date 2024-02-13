@@ -14,7 +14,10 @@ namespace Minigis_Surkov
         private GridGeometry geometry;
         private Bitmap gradientMap;
         private GridColors colors = new GridColors();
-       
+        private float[] anchorPoint;
+        private float[] sides;
+        private double? maxNodeValue;
+        private double? minNodeValue;
 
         public double?[,] mesh;
 
@@ -22,21 +25,40 @@ namespace Minigis_Surkov
         {
             var start = map.translateMapToScreen(new GeoPoint(bounds.minX, bounds.minY));
             var end = map.translateMapToScreen(new GeoPoint(bounds.maxX, bounds.maxY));
+            anchorPoint = new float[] { start.X, end.Y };
+            sides = new float[] {end.X - start.X, start.Y - end.Y};
 
-            Pen pen = new Pen(Color.Red, 1);
-            e.Graphics.DrawRectangle(pen,
-                start.X, start.Y,
-                start.X - end.X,
-                start.Y + end.Y);
-
-            if (gradientMap == null)
-            {
-                gradientMap = new Bitmap(geometry.countX, geometry.countY);
-            }
 
             if (colors.IsModified)
             {
                 renderGrid();
+            }
+
+
+            Pen pen = new Pen(Color.Red, 1);
+            e.Graphics.DrawRectangle(pen,
+                x: anchorPoint[0], y: anchorPoint[1],
+                width: sides[0], height: sides[1]
+                );
+        }
+
+
+        public void findMinMaxNodeValue()
+        {
+            for( int i = 0; i < mesh.GetLength(0); i++ )
+            {
+                for( int j = 0; j < mesh.GetLength(1); j++)
+                {
+                    if (mesh[i, j] != null)
+                    {
+                        var p = mesh[i, j];
+
+                        if (minNodeValue == null) { minNodeValue = p; }
+                        if (maxNodeValue == null) { maxNodeValue = p; }
+                        if (p > maxNodeValue) { maxNodeValue = p; }
+                        if (p < minNodeValue) { minNodeValue = p; }
+                    }
+                }
             }
         }
 
@@ -57,57 +79,59 @@ namespace Minigis_Surkov
 
         public double? getValue(GeoPoint location)
         {
-            if (!GeoRect.isIntersect(bounds, location)) { return 0; }
+            if (!GeoRect.isIntersect(bounds, location)) {
+                return 0; }
 
-            double minX = (location.x - geometry.originX) / geometry.distance;
-            double maxX = (geometry.maxX - location.x) / geometry.distance;
-            double maxY = (location.y - geometry.originY) / geometry.distance;
-            double minY = (geometry.maxY - location.y) / geometry.distance;
+            double minX = geometry.originX;
+            double maxX = geometry.maxX;
+            double maxY = geometry.maxY;
+            double minY = geometry.originY;
 
-            double[,] nodes =
-            {
-                {minX, minY}, {minX, maxY},
-                {maxX, minY}, {maxX, maxY},
-            };
 
-            double?[] values =
-            {
-                mesh[(int) minX, (int) minY], mesh[(int) minX, (int) maxY],
-                mesh[(int) maxX, (int) minY], mesh[(int) maxX, (int) maxY],
-            };
+            double x = location.x;
+            double y = location.y;
 
-            double? r1 = lerp(minX, values[0], maxX, values[2], location.x);
-            double? r2 = lerp(minX, values[1], maxX, values[3], location.x);
-            double? result = lerp(minY, r1, maxY - location.y, r2, location.y);
+            double w1 = (maxX - x) * (y - minY);
+            double w2 = (x - minX) * (y - minY);
+            double w3 = (maxX - x) * (maxY - y);
+            double w4 = (x - minX) * (maxY - y);
 
-            Console.WriteLine(r1);
-            Console.WriteLine(r2);
-                
+            double sumWeights = w1 + w2 + w3 + w4;
+            w1 /= sumWeights;
+            w2 /= sumWeights;
+            w3 /= sumWeights;
+            w4 /= sumWeights;
+
+            double? result = w1 * mesh[0, 0] + w2 * mesh[0, 1] + w3 * mesh[1, 0] + w4 * mesh[1, 1];
+
             return result;
         }
 
 
-        private double? lerp(double? x0, double? y0, double? x1, double? y1, double? x)
+        public void createBitmap()
         {
-            return y0 + ((y1 - y0) / (x1 - x0)) * (x - x0);
+            gradientMap = new Bitmap(width: (int)sides[0], height: (int)sides[1]);
         }
 
 
         private void renderGrid()
         {
-            if (gradientMap == null) { return; }
+            createBitmap();
 
-            for (int i = 0; i < geometry.countX; i++)
+            for (int i = 0; i < sides[0]; i++)
             {
-                for (int j = 0; j < geometry.countY; j++)
+                for (int j = 0; j < sides[1]; j++)
                 {
-                    double? targetValue = mesh[i, j];
-                    Color? color = getColor(targetValue);
-                    gradientMap.SetPixel(
-                        geometry.countY - j - 1, 
-                        geometry.countX - i - 1, 
-                        color.Value
+                    GeoPoint location = map.translateScreenToMap(
+                        new System.Drawing.Point((int)anchorPoint[0], (int)anchorPoint[1])
                         );
+
+
+                    double? val = getValue(
+                        new GeoPoint(location.x + i, location.y + i)
+                        );
+                    Color c = colors.interpolateColor(val, minNodeValue, maxNodeValue);
+                    gradientMap.SetPixel(i, j, c);
                 }
             }
             colors.IsModified = true;

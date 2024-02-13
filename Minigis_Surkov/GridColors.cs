@@ -52,5 +52,17 @@ namespace Minigis_Surkov
                 isModified = true;
             }
         }
+
+        public Color interpolateColor(double? targetValue, double? minValue, double? maxValue)
+        {
+            if (targetValue == null || targetValue < minValue) { return Color.Transparent; }
+
+            double? normalizedTarget = (targetValue - minValue) / (maxValue - minValue);
+            int? red = (int)(colorMin.R + normalizedTarget * (colorMax.R - colorMin.R));
+            int? green = (int)(colorMin.G + normalizedTarget * (colorMax.G - colorMin.G));
+            int? blue = (int)(colorMin.B + normalizedTarget * (colorMax.B - colorMin.B));
+            
+            return Color.FromArgb((int)red, (int)green, (int)blue);
+        }
     }
 }

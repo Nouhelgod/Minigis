@@ -193,7 +193,7 @@ namespace Minigis_Surkov
             // activeToolLabel
             // 
             this.activeToolLabel.Name = "activeToolLabel";
-            this.activeToolLabel.Size = new System.Drawing.Size(46, 17);
+            this.activeToolLabel.Size = new System.Drawing.Size(48, 17);
             this.activeToolLabel.Text = "✋ | Pan";
             // 
             // splitContainer1
