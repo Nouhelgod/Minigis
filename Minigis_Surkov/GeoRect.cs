@@ -71,9 +71,9 @@ namespace Minigis_Surkov
 
         public static bool isIntersect(GeoRect rect, GeoPoint point)
         {
-            Console.WriteLine("point-x: " + point.x + " point-y: " + point.y);
-            Console.WriteLine("min X: " + rect.minX + " Y: " + rect.minY);
-            Console.WriteLine("max X: " + rect.maxX + " Y: " + rect.maxY);
+            //Console.WriteLine("point-x: " + point.x + " point-y: " + point.y);
+            //Console.WriteLine("min X: " + rect.minX + " Y: " + rect.minY);
+            //Console.WriteLine("max X: " + rect.maxX + " Y: " + rect.maxY);
             if (point.x < rect.minX) { return false; }
             if (point.x > rect.maxX) { return false; }
             if (point.y < rect.minY) { return false; }
