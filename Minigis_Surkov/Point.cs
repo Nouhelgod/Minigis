@@ -12,6 +12,7 @@ namespace Minigis_Surkov
     {
         public GeoPoint location;
         public Symbol visual = new Symbol();
+        public double z;
         private string text;
 
         public Point(double x, double y, string text_ = "Default")
@@ -19,6 +20,16 @@ namespace Minigis_Surkov
             location = new GeoPoint();
             location.x = x;
             location.y = y;
+            z = 0;
+            text = text_;
+        }
+
+        public Point(double x, double y, double z_,  string text_ = "Default")
+        {
+            location = new GeoPoint();
+            location.x = x;
+            location.y = y;
+            z = z_;
             text = text_;
         }
 

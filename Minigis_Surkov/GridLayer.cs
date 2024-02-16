@@ -27,6 +27,7 @@ namespace Minigis_Surkov
         {
             var start = map.translateMapToScreen(new GeoPoint(bounds.minX, bounds.minY));
             var end = map.translateMapToScreen(new GeoPoint(bounds.maxX, bounds.maxY));
+
             anchorPoint = new float[] { start.X, end.Y };
             sides = new float[] {end.X - start.X, start.Y - end.Y};
 
@@ -121,6 +122,7 @@ namespace Minigis_Surkov
 
         public void createBitmap()
         {
+            if (sides[0] <= 0 || sides[1] <= 0) { sides[0] = 1; sides[1] = 1; }
             gradientMap = new Bitmap(width: (int)sides[0], height: (int)sides[1]);
         }
 
@@ -128,6 +130,8 @@ namespace Minigis_Surkov
         private void renderGrid()
         {
             createBitmap();
+
+            // ---
 
             for (int i = 0; i < sides[0]; i++)
             {
@@ -153,7 +157,7 @@ namespace Minigis_Surkov
             // ---
 
 
-            //Rectangle rect = new Rectangle((int)anchorPoint[0], (int)anchorPoint[1], (int)sides[0], (int)sides[1]);
+            //Rectangle rect = new Rectangle(0, 0, (int)sides[0], (int)sides[1]);
             //BitmapData bmpData = gradientMap.LockBits(rect, ImageLockMode.ReadWrite, gradientMap.PixelFormat);
 
 
@@ -175,9 +179,10 @@ namespace Minigis_Surkov
             //        if (anchorPoint[1] + j > map.Height) { return; }
 
             //        double? val = getValue(location);
+            //        int recalcLength = (i + 1) * (j + 1) - 3;
             //        Color c = colors.interpolateColor(val, minNodeValue, maxNodeValue);
 
-            //        for (int bytePos = 0; i < rgbValues.Length; bytePos += 3)
+            //        for (int bytePos = recalcLength; bytePos < recalcLength + 3; bytePos += 3)
             //        {
             //            rgbValues[bytePos] = c.R;
             //            rgbValues[bytePos + 1] = c.G;
@@ -188,6 +193,8 @@ namespace Minigis_Surkov
 
             //Marshal.Copy(rgbValues, 0, ptr, bytes);
             //gradientMap.UnlockBits(bmpData);
+
+            // ---
 
             colors.IsModified = true;
         }

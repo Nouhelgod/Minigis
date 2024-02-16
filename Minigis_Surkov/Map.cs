@@ -29,7 +29,7 @@ namespace Minigis_Surkov
         private ActiveTool lastTool;
         VectorLayer measures = new VectorLayer("📏 Measures");
 
-        static GridGeometry testGeometry = new GridGeometry(1000, 1000, 8, 1, -1);
+        static GridGeometry testGeometry = new GridGeometry(2, 2, 8, 1, -1);
         GridLayer testGridLayer = new GridLayer(testGeometry, _name: "test-grid");
         
 
