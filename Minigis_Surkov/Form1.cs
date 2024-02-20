@@ -94,6 +94,7 @@ namespace Minigis_Surkov
                 if (openLayerDialog.FileName != null)
                 {
                     var filename = System.IO.Path.GetFileNameWithoutExtension(openLayerDialog.FileName);
+                    var fileExtension = System.IO.Path.GetExtension(openLayerDialog.FileName);
                     try { 
                         
                         foreach (Layer layer in map1.layers)
@@ -101,7 +102,18 @@ namespace Minigis_Surkov
                             if (layer.name == filename) { return; }
                         }
                         var filepath = openLayerDialog.FileName;
-                        VectorLayer imported = new VectorLayer().parseMifFile(filepath);
+
+                        VectorLayer imported = null;
+
+                        if (fileExtension.ToLower() == ".mif")
+                        {
+                            imported = new VectorLayer().parseMifFile(filepath);
+                        }
+                        else if (fileExtension.ToLower() == ".csv")
+                        {
+                            imported = new VectorLayer().parseCSVFile(filepath);
+                        } 
+                        
                         map1.appendLayer(imported);
                         map1.Refresh();
                         layerControl1.refreshList();

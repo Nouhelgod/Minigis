@@ -456,15 +456,16 @@ namespace Minigis_Surkov
             }
         }
 
-        private GeoRect bounds = new GeoRect();
+        private GeoRect bounds;
 
         public GeoRect Bounds
         {
             get
             {
+                bounds = new GeoRect();
                 foreach (Layer layer in layers)
                 {
-                    if (!layer.isVisible) { break; }
+                    if (!layer.isVisible) { continue; }
                     bounds = GeoRect.union(bounds, layer.Bounds);
                 }
                 return bounds;

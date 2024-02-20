@@ -72,6 +72,37 @@ namespace Minigis_Surkov
             return result;
         }
 
+        internal VectorLayer parseCSVFile(string filename_)
+        {
+            char[] separators = {';', ',', '\t'};
+            var filename = Path.GetFileNameWithoutExtension(filename_);
+            string[] lines = File.ReadAllLines(filename_);
+            VectorLayer parsedLayer = new VectorLayer(filename);
+                       
+            foreach (string line in lines)
+            {
+                string[] cordStr = line.Split(separators);
+                double[] cordDouble = new double[cordStr.Length];
+                for (int i = 0; i < cordStr.Length; i++)
+                {
+                    cordStr[i] = cordStr[i].Replace('.', ',');
+                    cordDouble[i] = double.Parse(cordStr[i]);
+                }
+
+                Point p = new Point(cordDouble[0], cordDouble[1], cordDouble[2]);
+                parsedLayer.append(p);
+            }
+
+            //foreach (Point p in points)
+            //{
+            //    parsedLayer.append(p);
+            //}
+
+            
+
+            return parsedLayer;
+        }
+
         internal VectorLayer parseMifFile(string filename_)
         {
             var filename = Path.GetFileNameWithoutExtension(filename_);

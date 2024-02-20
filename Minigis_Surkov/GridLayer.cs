@@ -91,14 +91,14 @@ namespace Minigis_Surkov
 
         public double? getValue(GeoPoint location)
         {
-            if (!GeoRect.isIntersect(bounds, location)) {
-                return 0; }
+            if (!GeoRect.isIntersect(bounds, location)) { return 0; }
 
-            double minX = geometry.originX;
-            double maxX = geometry.maxX;
-            double maxY = geometry.maxY;
-            double minY = geometry.originY;
+            double[] nearest = geometry.findNearest(location);
 
+            double minX = nearest[0];
+            double maxX = nearest[1];
+            double minY = nearest[2];
+            double maxY = nearest[3];
 
             double x = location.x;
             double y = location.y;
@@ -129,43 +129,10 @@ namespace Minigis_Surkov
 
         private void renderGrid()
         {
-            createBitmap();
 
             // ---
-
-            for (int i = 0; i < sides[0]; i++)
-            {
-                for (int j = 0; j < sides[1]; j++)
-                {
-                    GeoPoint location = map.translateScreenToMap(
-                        new System.Drawing.Point((int)anchorPoint[0] + i, (int)anchorPoint[1] + j)
-                        );
-
-                    if (anchorPoint[0] + i > map.Width) { return; }
-                    if (anchorPoint[1] + j > map.Height) { return; }
-
-                    double? val = getValue(
-                        new GeoPoint(location.x, location.y)
-                        );
-                    Color c = colors.interpolateColor(val, minNodeValue, maxNodeValue);
-
-                    gradientMap.SetPixel(i, j, c);
-                }
-            }
-
-
-            // ---
-
-
-            //Rectangle rect = new Rectangle(0, 0, (int)sides[0], (int)sides[1]);
-            //BitmapData bmpData = gradientMap.LockBits(rect, ImageLockMode.ReadWrite, gradientMap.PixelFormat);
-
-
-            //IntPtr ptr = bmpData.Scan0;
-            //int bytes = Math.Abs(bmpData.Stride) * gradientMap.Height;
-            //byte[] rgbValues = new byte[bytes];
-
-            //Marshal.Copy(ptr, rgbValues, 0, bytes);
+            
+            //createBitmap();
 
             //for (int i = 0; i < sides[0]; i++)
             //{
@@ -178,35 +145,33 @@ namespace Minigis_Surkov
             //        if (anchorPoint[0] + i > map.Width) { return; }
             //        if (anchorPoint[1] + j > map.Height) { return; }
 
-            //        double? val = getValue(location);
-            //        int recalcLength = (i + 1) * (j + 1) - 3;
+            //        double? val = getValue(
+            //            new GeoPoint(location.x, location.y)
+            //            );
             //        Color c = colors.interpolateColor(val, minNodeValue, maxNodeValue);
 
-            //        for (int bytePos = recalcLength; bytePos < recalcLength + 3; bytePos += 3)
-            //        {
-            //            rgbValues[bytePos] = c.R;
-            //            rgbValues[bytePos + 1] = c.G;
-            //            rgbValues[bytePos + 2] = c.B;
-            //        }
+            //        gradientMap.SetPixel(i, j, c);
             //    }
             //}
 
-            //Marshal.Copy(rgbValues, 0, ptr, bytes);
-            //gradientMap.UnlockBits(bmpData);
-
             // ---
 
-            colors.IsModified = true;
-        }
+            gradientMap = new Bitmap(width: geometry.countX, height: geometry.countY);
 
-        private Color? getColor(double? targetValue)
-        {
-            if (!targetValue.HasValue)
-            { 
-                return null;
+            for (int w = 0; w < geometry.countX; w ++)
+            {
+                for (int h = 0; h < geometry.countY; h ++)
+                {
+                    double x = geometry.originX + geometry.distance * w;
+                    double y = geometry.originY + geometry.distance * h;
+
+                    double? val = getValue(new GeoPoint(x, y));
+                    Color c = colors.interpolateColor(val, minNodeValue, maxNodeValue);
+                    gradientMap.SetPixel(w, h, c);
+                }
             }
 
-            return Color.DarkGreen;
+            colors.IsModified = true;
         }
     }
 }

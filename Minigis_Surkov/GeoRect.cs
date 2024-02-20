@@ -23,15 +23,15 @@ namespace Minigis_Surkov
 
         public GeoRect()
         {
-            this.minX = 0;
-            this.minY = 0;
-            this.maxX = 0;
-            this.maxY = 0;
+            this.minX = double.NaN;
+            this.minY = double.NaN;
+            this.maxX = double.NaN;
+            this.maxY = double.NaN;
         }
 
         public bool isExist()
         {
-            return !(minX == 0 && minY == 0 && maxX == 0 && maxY == 0);
+            return !(minX is double.NaN && minY is double.NaN && maxX is double.NaN && maxY is double.NaN);
         }
 
         public static GeoRect union(GeoRect A, GeoRect B)
