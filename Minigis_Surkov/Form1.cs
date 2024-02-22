@@ -131,6 +131,25 @@ namespace Minigis_Surkov
             Map.tool = ActiveTool.GetValue;
             activeToolLabel.Text = "GET VALUE TOOL";
         }
+
+        private void RestoreGrid_Click(object sender, EventArgs e)
+        {
+            Layer affectedLayer;
+            Layer[] visibleVectorLayers = new Layer[map1.layers.Count];
+
+            foreach (Layer layer in map1.layers)
+            {
+                if (layer.isVisible && layer is VectorLayer)
+                {
+                    visibleVectorLayers.Append(layer);
+                }
+
+                if (visibleVectorLayers[1] != null)
+                {
+                    // send message box
+                }
+            }
+        }
     }
 
     public enum ActiveTool

@@ -50,6 +50,7 @@ namespace Minigis_Surkov
             this.layerControl1 = new Minigis_Surkov.LayerControl();
             this.map1 = new Minigis_Surkov.Map();
             this.openLayerDialog = new System.Windows.Forms.OpenFileDialog();
+            this.RestoreGrid = new System.Windows.Forms.ToolStripButton();
             this.toolStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -68,7 +69,8 @@ namespace Minigis_Surkov
             this.Select,
             this.ZoomAll,
             this.Measure,
-            this.GetValue});
+            this.GetValue,
+            this.RestoreGrid});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(896, 25);
@@ -251,6 +253,16 @@ namespace Minigis_Surkov
             // 
             this.openLayerDialog.FileName = "openFileDialog1";
             // 
+            // RestoreGrid
+            // 
+            this.RestoreGrid.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.RestoreGrid.Image = ((System.Drawing.Image)(resources.GetObject("RestoreGrid.Image")));
+            this.RestoreGrid.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.RestoreGrid.Name = "RestoreGrid";
+            this.RestoreGrid.Size = new System.Drawing.Size(23, 22);
+            this.RestoreGrid.Text = "toolStripButton1";
+            this.RestoreGrid.Click += new System.EventHandler(this.RestoreGrid_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -296,6 +308,7 @@ namespace Minigis_Surkov
         private System.Windows.Forms.OpenFileDialog openLayerDialog;
         private System.Windows.Forms.ToolStripButton Measure;
         private System.Windows.Forms.ToolStripButton GetValue;
+        private System.Windows.Forms.ToolStripButton RestoreGrid;
     }
 }
 

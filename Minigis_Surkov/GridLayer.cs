@@ -129,33 +129,6 @@ namespace Minigis_Surkov
 
         private void renderGrid()
         {
-
-            // ---
-            
-            //createBitmap();
-
-            //for (int i = 0; i < sides[0]; i++)
-            //{
-            //    for (int j = 0; j < sides[1]; j++)
-            //    {
-            //        GeoPoint location = map.translateScreenToMap(
-            //            new System.Drawing.Point((int)anchorPoint[0] + i, (int)anchorPoint[1] + j)
-            //            );
-
-            //        if (anchorPoint[0] + i > map.Width) { return; }
-            //        if (anchorPoint[1] + j > map.Height) { return; }
-
-            //        double? val = getValue(
-            //            new GeoPoint(location.x, location.y)
-            //            );
-            //        Color c = colors.interpolateColor(val, minNodeValue, maxNodeValue);
-
-            //        gradientMap.SetPixel(i, j, c);
-            //    }
-            //}
-
-            // ---
-
             gradientMap = new Bitmap(width: geometry.countX, height: geometry.countY);
 
             for (int w = 0; w < geometry.countX; w ++)
@@ -172,6 +145,51 @@ namespace Minigis_Surkov
             }
 
             colors.IsModified = true;
+        }
+
+        private void restoreGrid(VectorLayer layer, double cellSize = 10.0)
+        {
+            GeoPoint topLeft = new GeoPoint(layer.bounds.minX, layer.bounds.minY);
+            GeoPoint botRight = new GeoPoint(layer.bounds.maxX, layer.bounds.maxY);
+
+            double boundsWidth = botRight.x - topLeft.x;
+            double boundsHeight = botRight.y - topLeft.y;
+
+            // if < 1 then width > height
+            double boundsRatio = boundsHeight / boundsWidth;
+            geometry = new GridGeometry(
+                    distance: cellSize,
+                    originX: topLeft.x,
+                    originY: topLeft.y,
+                    countX: (int) (boundsWidth / cellSize),
+                    countY: (int) (boundsHeight / cellSize)
+                );
+        }
+
+        // Deprecated
+        private void renderPixelPerfectGrid()
+        {
+            createBitmap();
+
+            for (int i = 0; i < sides[0]; i++)
+            {
+                for (int j = 0; j < sides[1]; j++)
+                {
+                    GeoPoint location = map.translateScreenToMap(
+                        new System.Drawing.Point((int)anchorPoint[0] + i, (int)anchorPoint[1] + j)
+                        );
+
+                    if (anchorPoint[0] + i > map.Width) { return; }
+                    if (anchorPoint[1] + j > map.Height) { return; }
+
+                    double? val = getValue(
+                        new GeoPoint(location.x, location.y)
+                        );
+                    Color c = colors.interpolateColor(val, minNodeValue, maxNodeValue);
+
+                    gradientMap.SetPixel(i, j, c);
+                }
+            }
         }
     }
 }
