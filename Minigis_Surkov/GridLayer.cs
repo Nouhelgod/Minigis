@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -40,7 +41,6 @@ namespace Minigis_Surkov
             {
                 renderGrid();
             }
-
 
             Pen pen = new Pen(Color.Red, 1);
             e.Graphics.DrawRectangle(pen,
@@ -147,7 +147,7 @@ namespace Minigis_Surkov
             colors.IsModified = true;
         }
 
-        private void restoreGrid(VectorLayer layer, double cellSize = 10.0)
+        public static GridLayer restoreGrid(VectorLayer layer, double cellSize = 10.0)
         {
             GeoPoint topLeft = new GeoPoint(layer.bounds.minX, layer.bounds.minY);
             GeoPoint botRight = new GeoPoint(layer.bounds.maxX, layer.bounds.maxY);
@@ -157,13 +157,46 @@ namespace Minigis_Surkov
 
             // if < 1 then width > height
             double boundsRatio = boundsHeight / boundsWidth;
-            geometry = new GridGeometry(
+            GridGeometry geometry = new GridGeometry(
                     distance: cellSize,
                     originX: topLeft.x,
                     originY: topLeft.y,
-                    countX: (int) (boundsWidth / cellSize),
-                    countY: (int) (boundsHeight / cellSize)
+                    countX: (int) (boundsWidth / cellSize) + 1,
+                    countY: (int) (boundsHeight / cellSize) + 1
                 );
+
+            GridLayer generated = new GridLayer(geometry);
+            
+            for (int x = 0; x < generated.geometry.countX; x++)
+            {
+                for (int y = 0; y < generated.geometry.countY; y++)
+                {
+                    generated.geometry.nodeValues[x, y] = findValueInRadius(generated.geometry.nodeCoords[x, y], layer);
+                }
+            }
+
+            return generated;
+        }
+
+        private static double findValueInRadius(GeoPoint poi, VectorLayer dataLayer, double radius = 10, double power = 2)
+        {
+            foreach (MapObject mo in dataLayer.objects)
+            {
+                if (mo is Point)
+                {
+                    Point p = mo as Point;
+                    GeoPoint other = p.location;
+                    double dist = Math.Pow(poi.x - other.x, 2) + Math.Pow(poi.y + other.y, 2);
+
+                    if (Math.Pow(dist, 2) < Math.Pow(radius, 2))
+                    {
+
+                    }
+                }
+            }
+
+
+            return 0;
         }
 
         // Deprecated

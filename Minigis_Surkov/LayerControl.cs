@@ -13,6 +13,19 @@ namespace Minigis_Surkov
     public partial class LayerControl : UserControl
     {
         public Map map;
+        public Layer SelectedLayer
+        {
+            get
+            {
+                var selectedItems = listView1.SelectedItems;
+                if (selectedItems.Count != 1)
+                {
+                    return null;
+                }
+
+                return listView1.SelectedItems[0].Tag as Layer;
+            }
+        }
         public LayerControl()
         {
             InitializeComponent();

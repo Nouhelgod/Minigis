@@ -134,21 +134,22 @@ namespace Minigis_Surkov
 
         private void RestoreGrid_Click(object sender, EventArgs e)
         {
-            Layer affectedLayer;
-            Layer[] visibleVectorLayers = new Layer[map1.layers.Count];
+            VectorLayer affectedLayer;
+            GridLayer generatedLayer;
 
-            foreach (Layer layer in map1.layers)
+            if (!(layerControl1.SelectedLayer is VectorLayer))
             {
-                if (layer.isVisible && layer is VectorLayer)
-                {
-                    visibleVectorLayers.Append(layer);
-                }
-
-                if (visibleVectorLayers[1] != null)
-                {
-                    // send message box
-                }
+                MessageBox.Show("Select exactly one vector layer to proceed", "Error", MessageBoxButtons.OKCancel, MessageBoxIcon.Error);
             }
+
+            affectedLayer = layerControl1.SelectedLayer as VectorLayer;
+
+            generatedLayer = GridLayer.restoreGrid(affectedLayer, 500);
+            generatedLayer.name = affectedLayer.name + " mesh";
+            generatedLayer.map = affectedLayer.map;
+            map1.layers.Add(generatedLayer);
+            map1.layerControl.refreshList();
+            MessageBox.Show("ok?", "Error", MessageBoxButtons.OKCancel, MessageBoxIcon.Error);
         }
     }
 

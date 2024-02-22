@@ -10,7 +10,7 @@ namespace Minigis_Surkov
 {
     public class VectorLayer: Layer
     {
-        List<MapObject> objects = new List<MapObject>();
+        public List<MapObject> objects = new List<MapObject>();
 
         public VectorLayer()
         {
