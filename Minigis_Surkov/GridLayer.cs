@@ -32,15 +32,14 @@ namespace Minigis_Surkov
             anchorPoint = new float[] { start.X, end.Y };
             sides = new float[] {end.X - start.X, start.Y - end.Y};
 
-            if (map.Width - anchorPoint[0] < sides[0]) { sides[0] = map.Width - anchorPoint[0] - 1; } // Правая граница
-            if (map.Height - anchorPoint[1] < sides[1]) { sides[1] = map.Height - anchorPoint[1] - 1; } // Нижняя граница
-            if (anchorPoint[0] < 0) { sides[0] += anchorPoint[0]; anchorPoint[0] = 0; }
-            if (anchorPoint[1] < 0) { sides[1] += anchorPoint[1]; anchorPoint[1] = 1; }
+            //if (map.Width - anchorPoint[0] < sides[0]) { sides[0] = map.Width - anchorPoint[0] - 1; } // Правая граница
+            //if (map.Height - anchorPoint[1] < sides[1]) { sides[1] = map.Height - anchorPoint[1] - 1; } // Нижняя граница
+            //if (anchorPoint[0] < 0) { sides[0] += anchorPoint[0]; anchorPoint[0] = 0; }
+            //if (anchorPoint[1] < 0) { sides[1] += anchorPoint[1]; anchorPoint[1] = 1; }
 
-            if (colors.IsModified)
-            {
-                renderGrid();
-            }
+            
+            renderGrid();
+            
 
             Pen pen = new Pen(Color.Red, 1);
             e.Graphics.DrawRectangle(pen,
@@ -57,13 +56,15 @@ namespace Minigis_Surkov
 
         public void findMinMaxNodeValue()
         {
-            for( int i = 0; i < mesh.GetLength(0); i++ )
+            minNodeValue = null;
+            maxNodeValue = null;
+            for( int i = 0; i < geometry.countX; i++ )
             {
-                for( int j = 0; j < mesh.GetLength(1); j++)
+                for( int j = 0; j < geometry.countY; j++)
                 {
-                    if (mesh[i, j] != null)
+                    var p = geometry.nodeValues[i, j];
+                    if (p != null)
                     {
-                        var p = mesh[i, j];
 
                         if (minNodeValue == null) { minNodeValue = p; }
                         if (maxNodeValue == null) { maxNodeValue = p; }
@@ -130,7 +131,7 @@ namespace Minigis_Surkov
         private void renderGrid()
         {
             gradientMap = new Bitmap(width: geometry.countX, height: geometry.countY);
-
+            
             for (int w = 0; w < geometry.countX; w ++)
             {
                 for (int h = 0; h < geometry.countY; h ++)
@@ -138,8 +139,10 @@ namespace Minigis_Surkov
                     double x = geometry.originX + geometry.distance * w;
                     double y = geometry.originY + geometry.distance * h;
 
-                    double? val = getValue(new GeoPoint(x, y));
+                    double? val = geometry.nodeValues[w, h];
                     Color c = colors.interpolateColor(val, minNodeValue, maxNodeValue);
+
+                    int trueH = geometry.countY - h;                    
                     gradientMap.SetPixel(w, h, c);
                 }
             }
@@ -171,32 +174,48 @@ namespace Minigis_Surkov
             {
                 for (int y = 0; y < generated.geometry.countY; y++)
                 {
-                    generated.geometry.nodeValues[x, y] = findValueInRadius(generated.geometry.nodeCoords[x, y], layer);
+
+                    generated.geometry.nodeValues[x, y] = findValueInRadius(generated.geometry.nodeCoords[x, y], layer, radius: 1500);
                 }
             }
 
+            generated.findMinMaxNodeValue();
             return generated;
         }
 
-        private static double findValueInRadius(GeoPoint poi, VectorLayer dataLayer, double radius = 10, double power = 2)
+        private static double? findValueInRadius(GeoPoint poi, VectorLayer dataLayer, double radius = 10, double power = 2)
         {
+            double accumVal = 0;
+            double accumCoef = 0;
+            double rSquared = radius * radius;
+            bool legit = false;
+            
             foreach (MapObject mo in dataLayer.objects)
             {
                 if (mo is Point)
                 {
                     Point p = mo as Point;
                     GeoPoint other = p.location;
-                    double dist = Math.Pow(poi.x - other.x, 2) + Math.Pow(poi.y + other.y, 2);
+                    double dist = Math.Pow(poi.x - other.x, 2) + Math.Pow(poi.y - other.y, 2);
 
-                    if (Math.Pow(dist, 2) < Math.Pow(radius, 2))
+                    if (dist <= double.Epsilon) { return p.z; }
+
+
+                    if (dist < rSquared)
                     {
-
+                        accumVal += p.z / (Math.Pow(dist, power));
+                        accumCoef += 1 / (Math.Pow(dist, power));
+                        legit = true;
                     }
                 }
             }
 
+            if (!legit)
+            {
+                return null;
+            }
 
-            return 0;
+            return accumVal / accumCoef;
         }
 
         // Deprecated

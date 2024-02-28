@@ -140,6 +140,7 @@ namespace Minigis_Surkov
             if (!(layerControl1.SelectedLayer is VectorLayer))
             {
                 MessageBox.Show("Select exactly one vector layer to proceed", "Error", MessageBoxButtons.OKCancel, MessageBoxIcon.Error);
+                return;
             }
 
             affectedLayer = layerControl1.SelectedLayer as VectorLayer;
@@ -149,7 +150,7 @@ namespace Minigis_Surkov
             generatedLayer.map = affectedLayer.map;
             map1.layers.Add(generatedLayer);
             map1.layerControl.refreshList();
-            MessageBox.Show("ok?", "Error", MessageBoxButtons.OKCancel, MessageBoxIcon.Error);
+            MessageBox.Show("ok?", "ok?", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
 

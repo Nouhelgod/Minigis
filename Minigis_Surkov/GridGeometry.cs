@@ -11,7 +11,7 @@
         public double maxY => (originY + distance * (countY - 1));
 
         public GeoPoint[,] nodeCoords;
-        public double[,] nodeValues;
+        public double?[,] nodeValues;
         public GridGeometry (int countX, int countY, double distance, double originX, double originY)
         {
             this.countX = countX;
@@ -21,6 +21,7 @@
             this.originY = originY;
 
             this.nodeCoords = new GeoPoint[countX, countY];
+            this.nodeValues = new double?[countX, countY];
 
             for (int x = 0; x < countX; x++)
             {

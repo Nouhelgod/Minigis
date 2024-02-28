@@ -116,7 +116,7 @@ namespace Minigis_Surkov
                 appendLayer(lines);
                 appendLayer(polygons);
                 appendLayer(measures);
-                appendLayer(testGridLayer);
+                // appendLayer(testGridLayer);
                 refreshLayerList();
 
 
