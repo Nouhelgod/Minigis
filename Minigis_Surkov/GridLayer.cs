@@ -23,9 +23,15 @@ namespace Minigis_Surkov
         private double? minNodeValue;
 
         public double?[,] mesh;
-
+        public GridGeometry Geometry
+        {
+            get { return geometry; }
+            set { geometry = value; }
+        }
         internal override void drawLayer(PaintEventArgs e)
         {
+        
+            
             var start = map.translateMapToScreen(new GeoPoint(bounds.minX, bounds.minY));
             var end = map.translateMapToScreen(new GeoPoint(bounds.maxX, bounds.maxY));
 
@@ -150,23 +156,23 @@ namespace Minigis_Surkov
             colors.IsModified = true;
         }
 
-        public static GridLayer restoreGrid(VectorLayer layer, double cellSize = 10.0)
+        public static GridLayer restoreGrid(VectorLayer layer, double cellSize = 10.0, GridGeometry geometry = null, int radius = 100, int power = 2)
         {
-            GeoPoint topLeft = new GeoPoint(layer.bounds.minX, layer.bounds.minY);
-            GeoPoint botRight = new GeoPoint(layer.bounds.maxX, layer.bounds.maxY);
+            if (geometry == null)
+            {
+                GeoPoint topLeft = new GeoPoint(layer.bounds.minX, layer.bounds.minY);
+                GeoPoint botRight = new GeoPoint(layer.bounds.maxX, layer.bounds.maxY);
+                double boundsWidth = botRight.x - topLeft.x;
+                double boundsHeight = botRight.y - topLeft.y;
 
-            double boundsWidth = botRight.x - topLeft.x;
-            double boundsHeight = botRight.y - topLeft.y;
-
-            // if < 1 then width > height
-            double boundsRatio = boundsHeight / boundsWidth;
-            GridGeometry geometry = new GridGeometry(
-                    distance: cellSize,
-                    originX: topLeft.x,
-                    originY: topLeft.y,
-                    countX: (int) (boundsWidth / cellSize) + 1,
-                    countY: (int) (boundsHeight / cellSize) + 1
+                geometry = new GridGeometry(
+                        distance: cellSize,
+                        originX: topLeft.x,
+                        originY: topLeft.y,
+                        countX: (int) (boundsWidth / cellSize) + 1,
+                        countY: (int) (boundsHeight / cellSize) + 1
                 );
+            }
 
             GridLayer generated = new GridLayer(geometry);
             
@@ -175,7 +181,12 @@ namespace Minigis_Surkov
                 for (int y = 0; y < generated.geometry.countY; y++)
                 {
 
-                    generated.geometry.nodeValues[x, y] = findValueInRadius(generated.geometry.nodeCoords[x, y], layer, radius: 1500);
+                    generated.geometry.nodeValues[x, y] = findValueInRadius(
+                        new GeoPoint(
+                            (int) (generated.geometry.originX + generated.geometry.distance * x),
+                            (int) (generated.geometry.originY + generated.geometry.distance * y)
+                        ), 
+                        layer, radius: radius, power: power);
                 }
             }
 

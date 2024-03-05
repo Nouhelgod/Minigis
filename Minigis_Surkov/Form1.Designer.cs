@@ -38,6 +38,7 @@ namespace Minigis_Surkov
             this.ZoomAll = new System.Windows.Forms.ToolStripButton();
             this.Measure = new System.Windows.Forms.ToolStripButton();
             this.GetValue = new System.Windows.Forms.ToolStripButton();
+            this.RestoreGrid = new System.Windows.Forms.ToolStripButton();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.statusLabelX = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
@@ -50,7 +51,8 @@ namespace Minigis_Surkov
             this.layerControl1 = new Minigis_Surkov.LayerControl();
             this.map1 = new Minigis_Surkov.Map();
             this.openLayerDialog = new System.Windows.Forms.OpenFileDialog();
-            this.RestoreGrid = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.testRun = new System.Windows.Forms.ToolStripButton();
             this.toolStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -70,7 +72,9 @@ namespace Minigis_Surkov
             this.ZoomAll,
             this.Measure,
             this.GetValue,
-            this.RestoreGrid});
+            this.RestoreGrid,
+            this.toolStripSeparator1,
+            this.testRun});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(896, 25);
@@ -144,8 +148,18 @@ namespace Minigis_Surkov
             this.GetValue.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.GetValue.Name = "GetValue";
             this.GetValue.Size = new System.Drawing.Size(23, 22);
-            this.GetValue.Text = "toolStripButton1";
+            this.GetValue.Text = "getValue";
             this.GetValue.Click += new System.EventHandler(this.GetValue_Click);
+            // 
+            // RestoreGrid
+            // 
+            this.RestoreGrid.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.RestoreGrid.Image = ((System.Drawing.Image)(resources.GetObject("RestoreGrid.Image")));
+            this.RestoreGrid.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.RestoreGrid.Name = "RestoreGrid";
+            this.RestoreGrid.Size = new System.Drawing.Size(23, 22);
+            this.RestoreGrid.Text = "gridifyLayer";
+            this.RestoreGrid.Click += new System.EventHandler(this.RestoreGrid_Click);
             // 
             // statusStrip1
             // 
@@ -195,7 +209,7 @@ namespace Minigis_Surkov
             // activeToolLabel
             // 
             this.activeToolLabel.Name = "activeToolLabel";
-            this.activeToolLabel.Size = new System.Drawing.Size(48, 17);
+            this.activeToolLabel.Size = new System.Drawing.Size(46, 17);
             this.activeToolLabel.Text = "✋ | Pan";
             // 
             // splitContainer1
@@ -253,15 +267,20 @@ namespace Minigis_Surkov
             // 
             this.openLayerDialog.FileName = "openFileDialog1";
             // 
-            // RestoreGrid
+            // toolStripSeparator1
             // 
-            this.RestoreGrid.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.RestoreGrid.Image = ((System.Drawing.Image)(resources.GetObject("RestoreGrid.Image")));
-            this.RestoreGrid.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.RestoreGrid.Name = "RestoreGrid";
-            this.RestoreGrid.Size = new System.Drawing.Size(23, 22);
-            this.RestoreGrid.Text = "toolStripButton1";
-            this.RestoreGrid.Click += new System.EventHandler(this.RestoreGrid_Click);
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+            // 
+            // testRun
+            // 
+            this.testRun.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.testRun.Image = ((System.Drawing.Image)(resources.GetObject("testRun.Image")));
+            this.testRun.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.testRun.Name = "testRun";
+            this.testRun.Size = new System.Drawing.Size(23, 22);
+            this.testRun.Text = "toolStripButton1";
+            this.testRun.Click += new System.EventHandler(this.testRun_Click);
             // 
             // Form1
             // 
@@ -309,6 +328,8 @@ namespace Minigis_Surkov
         private System.Windows.Forms.ToolStripButton Measure;
         private System.Windows.Forms.ToolStripButton GetValue;
         private System.Windows.Forms.ToolStripButton RestoreGrid;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripButton testRun;
     }
 }
 

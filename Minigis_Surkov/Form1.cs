@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -151,6 +152,57 @@ namespace Minigis_Surkov
             map1.layers.Add(generatedLayer);
             map1.layerControl.refreshList();
             MessageBox.Show("ok?", "ok?", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void testRun_Click(object sender, EventArgs e)
+        {
+            int WIDTH = 200;
+            int HEIGHT = 200;
+            int DISTANCE = 10;
+            string FILEPATH = "U:\\Minigis-git\\points3d.csv";
+            VectorLayer vectorTestLayer = new VectorLayer().parseCSVFile(FILEPATH);
+
+            GridGeometry testGeometry = new GridGeometry(
+                WIDTH, HEIGHT, DISTANCE, 
+                vectorTestLayer.bounds.minX, 
+                vectorTestLayer.bounds.minY);
+            GridLayer gridTestLayer = new GridLayer(testGeometry);
+
+            GridGeometry[] restoredGeometry = new GridGeometry[5];
+
+            for (int pow = 1; pow <= 5; pow++)
+            {
+                gridTestLayer = GridLayer.restoreGrid(vectorTestLayer, cellSize: DISTANCE, geometry: testGeometry, radius: 300, power: pow);
+                restoredGeometry[pow - 1] = gridTestLayer.Geometry;
+            }
+
+            GridGeometry finalGeometry = testGeometry;
+
+            for (int i = 0; i < restoredGeometry.Length; i++)
+            {
+                for(int x = 0; x < finalGeometry.countX; x++)
+                {
+                    for(int y = 0; y < finalGeometry.countY; y++)
+                    {
+                        finalGeometry.nodeValues[x, y] += restoredGeometry[i].nodeValues[x, y];
+
+                        if (i == 4)
+                        {
+                            finalGeometry.nodeValues[x, y] /= 5;
+                        }
+                    }
+                }
+            }
+
+            gridTestLayer.Geometry = finalGeometry;
+            gridTestLayer.findMinMaxNodeValue();
+            gridTestLayer.name = "test-grid-layer";
+            vectorTestLayer.isVisible = false;
+            vectorTestLayer.name = "test-csv-layer";
+
+            map1.appendLayer(gridTestLayer);
+            map1.layerControl.refreshList();
+            
         }
     }
 

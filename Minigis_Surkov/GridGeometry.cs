@@ -20,51 +20,54 @@
             this.originX = originX;
             this.originY = originY;
 
-            this.nodeCoords = new GeoPoint[countX, countY];
+            // this.nodeCoords = new GeoPoint[countX, countY];
             this.nodeValues = new double?[countX, countY];
 
-            for (int x = 0; x < countX; x++)
-            {
-                for (int y = 0; y < countY; y++)
-                {
-                    double x_ = originX + distance * x;
-                    double y_ = originY + distance * y;
-                    nodeCoords[x, y] = new GeoPoint(x_, y_);
-                }
-            }
+            //for (int x = 0; x < countX; x++)
+            //{
+            //    for (int y = 0; y < countY; y++)
+            //    {
+            //        double x_ = originX + distance * x;
+            //        double y_ = originY + distance * y;
+            //        nodeCoords[x, y] = new GeoPoint(x_, y_);
+            //    }
+            //}
         }
 
         public double[] findNearest(GeoPoint point)
         {
+
             double[] nearest = new double[4];
-            for (int x = 0; x < countX; x++)
-            {
-                for (int y = 0; y < countY; y++)
-                {
-                    double nextNodeX = double.NaN;
-                    double nextNodeY = double.NaN;
-                    double nodeX = nodeCoords[x, y].x;
-                    double nodeY = nodeCoords[x, y].y;
 
-                    if (y + 1 != countY && x + 1 != countX)
-                    {
-                        nextNodeX = nodeCoords[x + 1, y].x;
-                        nextNodeY = nodeCoords[x, y + 1].y;
-                    }
+            // ===  
 
-                    if (point.x >= nodeX && nextNodeX >= point.x)
-                    {
-                        nearest[0] = nodeX;
-                        nearest[1] = nextNodeX;
-                    }
+            //double nodeX = originX;
+            //double nodeY = originY;
 
-                    if (point.y >= nodeY && nextNodeY >= point.y)
-                    {
-                        nearest[2] = nodeY;
-                        nearest[3] = nextNodeY;
-                    }
-                }
-            }
+            //while (nodeX < point.x )
+            //{
+            //    nearest[0] = nodeX;
+            //    nodeX += distance;
+            //    nearest[1] = nodeX;
+            //}
+
+            //while (nodeY < point.y)
+            //{
+            //    nearest[2] = nodeY;
+            //    nodeY += distance;
+            //    nearest[3] = nodeY;
+            //}
+
+
+            //(x - xmin) / dist
+
+            double dX = point.x - originX;
+            double dY = point.y - originY;
+            nearest[0] = dX / distance;
+            nearest[1] = nearest[0] + distance;
+            nearest[2] = dY / distance;
+            nearest[3] = nearest[2] + distance;
+
             return nearest;
         }
     }
