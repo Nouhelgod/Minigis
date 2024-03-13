@@ -19,6 +19,8 @@ namespace Minigis_Surkov
             layerControl1.map = map1;
             map1.layerControl = layerControl1;
             layerControl1.refreshList();
+            minToolStripMenuItem.BackColor = map1.gridColors.ColorMin;
+            maxToolStripMenuItem.BackColor = map1.gridColors.ColorMax;
         }
 
         private void ZoomAll_Click(object sender, EventArgs e)
@@ -135,6 +137,13 @@ namespace Minigis_Surkov
 
         private void RestoreGrid_Click(object sender, EventArgs e)
         {
+            formGridTune tuneForm = new formGridTune();
+
+            if (tuneForm.ShowDialog() != DialogResult.OK)
+            {
+                return;
+            }
+
             VectorLayer affectedLayer;
             GridLayer generatedLayer;
 
@@ -145,13 +154,18 @@ namespace Minigis_Surkov
             }
 
             affectedLayer = layerControl1.SelectedLayer as VectorLayer;
+            affectedLayer.bounds.minX += tuneForm.marginWest;
+            affectedLayer.bounds.maxX -= tuneForm.marginEast;
+            affectedLayer.bounds.minY += tuneForm.marginNorth;
+            affectedLayer.bounds.maxY -= tuneForm.marginSouth;
 
-            generatedLayer = GridLayer.restoreGrid(affectedLayer, 500);
+            generatedLayer = GridLayer.restoreGrid(affectedLayer, cellSize: tuneForm.cellSize, radius: tuneForm.radius);
             generatedLayer.name = affectedLayer.name + " mesh";
             generatedLayer.map = affectedLayer.map;
             map1.layers.Add(generatedLayer);
             map1.layerControl.refreshList();
             MessageBox.Show("ok?", "ok?", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
         }
 
         private void testRun_Click(object sender, EventArgs e)
@@ -159,7 +173,7 @@ namespace Minigis_Surkov
             int WIDTH = 200;
             int HEIGHT = 200;
             int DISTANCE = 10;
-            string FILEPATH = "U:\\Minigis-git\\points3d.csv";
+            string FILEPATH = "points3d.csv";
             VectorLayer vectorTestLayer = new VectorLayer().parseCSVFile(FILEPATH);
 
             GridGeometry testGeometry = new GridGeometry(
@@ -203,6 +217,37 @@ namespace Minigis_Surkov
             map1.appendLayer(gridTestLayer);
             map1.layerControl.refreshList();
             
+        }
+
+        private void selectColors_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void minToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            colorDialogMain.AllowFullOpen = true;
+            colorDialogMain.Color = map1.gridColors.ColorMin;
+
+            if (colorDialogMain.ShowDialog() == DialogResult.OK)
+            {
+                map1.gridColors.ColorMin = colorDialogMain.Color;
+                minToolStripMenuItem.BackColor = colorDialogMain.Color;
+                map1.gridColors.IsModified = true;
+            }
+        }
+
+        private void maxToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            colorDialogMain.AllowFullOpen = true;
+            colorDialogMain.Color = map1.gridColors.ColorMax;
+
+            if (colorDialogMain.ShowDialog() == DialogResult.OK)
+            {
+                map1.gridColors.ColorMax = colorDialogMain.Color;
+                maxToolStripMenuItem.BackColor = colorDialogMain.Color;
+                map1.gridColors.IsModified = true;
+            }
         }
     }
 

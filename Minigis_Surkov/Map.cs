@@ -16,7 +16,10 @@ namespace Minigis_Surkov
         public GeoPoint center = new GeoPoint();
         public double scale = 1;
         public List<Layer> layers = new List<Layer>();
+        
         static public ActiveTool tool = ActiveTool.Pan;
+
+        public GridColors gridColors = new GridColors();
 
         private System.Drawing.Point mouseDownPosition;
         private System.Drawing.Point mouseDownStartPosition;
@@ -36,6 +39,7 @@ namespace Minigis_Surkov
         public Map()
         {
             InitializeComponent();
+
 
             // Testing
             {

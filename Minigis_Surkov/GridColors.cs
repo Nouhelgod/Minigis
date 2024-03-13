@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Minigis_Surkov
 {
-    internal class GridColors
+    public class GridColors
     {
         private Color colorMin;
         private Color colorMax;

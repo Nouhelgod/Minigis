@@ -92,13 +92,7 @@ namespace Minigis_Surkov
                 Point p = new Point(cordDouble[0], cordDouble[1], cordDouble[2]);
                 parsedLayer.append(p);
             }
-
-            //foreach (Point p in points)
-            //{
-            //    parsedLayer.append(p);
-            //}
-
-            
+         
 
             return parsedLayer;
         }

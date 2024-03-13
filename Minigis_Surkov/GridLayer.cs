@@ -16,7 +16,6 @@ namespace Minigis_Surkov
     {
         private GridGeometry geometry;
         private Bitmap gradientMap;
-        private GridColors colors = new GridColors();
         private float[] anchorPoint;
         private float[] sides;
         private double? maxNodeValue;
@@ -43,8 +42,10 @@ namespace Minigis_Surkov
             //if (anchorPoint[0] < 0) { sides[0] += anchorPoint[0]; anchorPoint[0] = 0; }
             //if (anchorPoint[1] < 0) { sides[1] += anchorPoint[1]; anchorPoint[1] = 1; }
 
-            
-            renderGrid();
+            if (map.gridColors.IsModified)
+            {
+                renderGrid();
+            }
             
 
             Pen pen = new Pen(Color.Red, 1);
@@ -146,17 +147,18 @@ namespace Minigis_Surkov
                     double y = geometry.originY + geometry.distance * h;
 
                     double? val = geometry.nodeValues[w, h];
-                    Color c = colors.interpolateColor(val, minNodeValue, maxNodeValue);
+                    Color c = map.gridColors.interpolateColor(val, minNodeValue, maxNodeValue);
 
-                    int trueH = geometry.countY - h;                    
-                    gradientMap.SetPixel(w, h, c);
+                    int trueH = geometry.countY - h -1;                    
+                    gradientMap.SetPixel(w, trueH, c);
                 }
             }
 
-            colors.IsModified = true;
+
+            map.gridColors.IsModified = false;
         }
 
-        public static GridLayer restoreGrid(VectorLayer layer, double cellSize = 10.0, GridGeometry geometry = null, int radius = 100, int power = 2)
+        public static GridLayer restoreGrid(VectorLayer layer, double cellSize = 10.0, GridGeometry geometry = null, double radius = 100, int power = 2)
         {
             if (geometry == null)
             {
@@ -248,7 +250,7 @@ namespace Minigis_Surkov
                     double? val = getValue(
                         new GeoPoint(location.x, location.y)
                         );
-                    Color c = colors.interpolateColor(val, minNodeValue, maxNodeValue);
+                    Color c = map.gridColors.interpolateColor(val, minNodeValue, maxNodeValue);
 
                     gradientMap.SetPixel(i, j, c);
                 }

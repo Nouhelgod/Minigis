@@ -39,6 +39,8 @@ namespace Minigis_Surkov
             this.Measure = new System.Windows.Forms.ToolStripButton();
             this.GetValue = new System.Windows.Forms.ToolStripButton();
             this.RestoreGrid = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.testRun = new System.Windows.Forms.ToolStripButton();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.statusLabelX = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
@@ -48,11 +50,14 @@ namespace Minigis_Surkov
             this.activeToolLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.buttonAddLayer = new System.Windows.Forms.Button();
+            this.openLayerDialog = new System.Windows.Forms.OpenFileDialog();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripSplitButton1 = new System.Windows.Forms.ToolStripSplitButton();
+            this.minToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.maxToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.colorDialogMain = new System.Windows.Forms.ColorDialog();
             this.layerControl1 = new Minigis_Surkov.LayerControl();
             this.map1 = new Minigis_Surkov.Map();
-            this.openLayerDialog = new System.Windows.Forms.OpenFileDialog();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.testRun = new System.Windows.Forms.ToolStripButton();
             this.toolStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -71,10 +76,12 @@ namespace Minigis_Surkov
             this.Select,
             this.ZoomAll,
             this.Measure,
+            this.toolStripSeparator1,
             this.GetValue,
             this.RestoreGrid,
-            this.toolStripSeparator1,
-            this.testRun});
+            this.testRun,
+            this.toolStripSeparator2,
+            this.toolStripSplitButton1});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(896, 25);
@@ -161,6 +168,21 @@ namespace Minigis_Surkov
             this.RestoreGrid.Text = "gridifyLayer";
             this.RestoreGrid.Click += new System.EventHandler(this.RestoreGrid_Click);
             // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+            // 
+            // testRun
+            // 
+            this.testRun.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.testRun.Image = ((System.Drawing.Image)(resources.GetObject("testRun.Image")));
+            this.testRun.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.testRun.Name = "testRun";
+            this.testRun.Size = new System.Drawing.Size(23, 22);
+            this.testRun.Text = "toolStripButton1";
+            this.testRun.Click += new System.EventHandler(this.testRun_Click);
+            // 
             // statusStrip1
             // 
             this.statusStrip1.BackColor = System.Drawing.Color.WhiteSmoke;
@@ -203,8 +225,8 @@ namespace Minigis_Surkov
             // statusLabelMS
             // 
             this.statusLabelMS.Name = "statusLabelMS";
-            this.statusLabelMS.Size = new System.Drawing.Size(24, 17);
-            this.statusLabelMS.Text = "MS";
+            this.statusLabelMS.Size = new System.Drawing.Size(38, 17);
+            this.statusLabelMS.Text = " Tool: ";
             // 
             // activeToolLabel
             // 
@@ -235,6 +257,7 @@ namespace Minigis_Surkov
             // 
             // buttonAddLayer
             // 
+            this.buttonAddLayer.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.buttonAddLayer.Location = new System.Drawing.Point(0, 452);
             this.buttonAddLayer.Name = "buttonAddLayer";
             this.buttonAddLayer.Size = new System.Drawing.Size(150, 23);
@@ -242,6 +265,43 @@ namespace Minigis_Surkov
             this.buttonAddLayer.Text = "Add layer";
             this.buttonAddLayer.UseVisualStyleBackColor = true;
             this.buttonAddLayer.Click += new System.EventHandler(this.buttonAddLayer_Click);
+            // 
+            // openLayerDialog
+            // 
+            this.openLayerDialog.FileName = "openFileDialog1";
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
+            // 
+            // toolStripSplitButton1
+            // 
+            this.toolStripSplitButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripSplitButton1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.minToolStripMenuItem,
+            this.maxToolStripMenuItem});
+            this.toolStripSplitButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripSplitButton1.Image")));
+            this.toolStripSplitButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripSplitButton1.Name = "toolStripSplitButton1";
+            this.toolStripSplitButton1.Size = new System.Drawing.Size(32, 22);
+            this.toolStripSplitButton1.Text = "toolStripSplitButton1";
+            // 
+            // minToolStripMenuItem
+            // 
+            this.minToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI Black", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.minToolStripMenuItem.Name = "minToolStripMenuItem";
+            this.minToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.minToolStripMenuItem.Text = "Min";
+            this.minToolStripMenuItem.Click += new System.EventHandler(this.minToolStripMenuItem_Click);
+            // 
+            // maxToolStripMenuItem
+            // 
+            this.maxToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI Black", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.maxToolStripMenuItem.Name = "maxToolStripMenuItem";
+            this.maxToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.maxToolStripMenuItem.Text = "Max";
+            this.maxToolStripMenuItem.Click += new System.EventHandler(this.maxToolStripMenuItem_Click);
             // 
             // layerControl1
             // 
@@ -262,25 +322,6 @@ namespace Minigis_Surkov
             this.map1.TabIndex = 3;
             this.map1.Load += new System.EventHandler(this.map1_Load_1);
             this.map1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.map1_MouseMove);
-            // 
-            // openLayerDialog
-            // 
-            this.openLayerDialog.FileName = "openFileDialog1";
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
-            // 
-            // testRun
-            // 
-            this.testRun.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.testRun.Image = ((System.Drawing.Image)(resources.GetObject("testRun.Image")));
-            this.testRun.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.testRun.Name = "testRun";
-            this.testRun.Size = new System.Drawing.Size(23, 22);
-            this.testRun.Text = "toolStripButton1";
-            this.testRun.Click += new System.EventHandler(this.testRun_Click);
             // 
             // Form1
             // 
@@ -330,6 +371,11 @@ namespace Minigis_Surkov
         private System.Windows.Forms.ToolStripButton RestoreGrid;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripButton testRun;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.ToolStripSplitButton toolStripSplitButton1;
+        private System.Windows.Forms.ToolStripMenuItem minToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem maxToolStripMenuItem;
+        private System.Windows.Forms.ColorDialog colorDialogMain;
     }
 }
 
