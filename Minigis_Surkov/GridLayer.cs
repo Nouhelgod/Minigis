@@ -31,7 +31,7 @@ namespace Minigis_Surkov
         internal override void drawLayer(PaintEventArgs e)
         {
         
-            
+            map.gridColors.IsModified = true;
             var start = map.translateMapToScreen(new GeoPoint(bounds.minX, bounds.minY));
             var end = map.translateMapToScreen(new GeoPoint(bounds.maxX, bounds.maxY));
 
@@ -151,26 +151,38 @@ namespace Minigis_Surkov
 
             double[] nearest = geometry.findNearest(location);
 
-            double minX = nearest[0];
-            double maxX = nearest[1];
-            double minY = nearest[2];
-            double maxY = nearest[3];
+            //double minX = nearest[0];
+            //double maxX = nearest[1];
+            //double minY = nearest[2];
+            //double maxY = nearest[3];
 
-            double x = location.x;
-            double y = location.y;
+            //double x = location.x;
+            //double y = location.y;
 
-            double w1 = (maxX - x) * (y - minY);
-            double w2 = (x - minX) * (y - minY);
-            double w3 = (maxX - x) * (maxY - y);
-            double w4 = (x - minX) * (maxY - y);
+            //double w1 = (maxX - x) * (y - minY);
+            //double w2 = (x - minX) * (y - minY);
+            //double w3 = (maxX - x) * (maxY - y);
+            //double w4 = (x - minX) * (maxY - y);
 
-            double sumWeights = w1 + w2 + w3 + w4;
-            w1 /= sumWeights;
-            w2 /= sumWeights;
-            w3 /= sumWeights;
-            w4 /= sumWeights;
+            //double sumWeights = w1 + w2 + w3 + w4;
 
-            double? result = w1 * mesh[0, 0] + w2 * mesh[0, 1] + w3 * mesh[1, 0] + w4 * mesh[1, 1];
+            //w1 /= sumWeights;
+            //w2 /= sumWeights;
+            //w3 /= sumWeights;
+            //w4 /= sumWeights;
+
+            //double? result = w1 * geometry.nodeValues[nearest[0], nearest[2]] + w2 * geometry.nodeValues[nearest[1], nearest[3]] 
+            //    + w3 * geometry.nodeValues[nearest[2], nearest[0]] + w4 * geometry.nodeValues[nearest[3], nearest[1]];
+            double? z1 = geometry.nodeValues[(int)nearest[0], (int)nearest[2]];
+            double? z2 = geometry.nodeValues[(int)nearest[1], (int)nearest[2]];
+            double? z3 = geometry.nodeValues[(int)nearest[0], (int)nearest[3]];
+            double? z4 = geometry.nodeValues[(int)nearest[1], (int)nearest[3]];
+
+            double? z5 = (nearest[5] * (z2 - z1)) / geometry.distance + z1;
+            double? z6 = (nearest[5] * (z4 - z3)) / geometry.distance + z3;
+
+            double? result = (nearest[4] * (z6 - z5)) / geometry.distance + z5;
+
 
             return result;
         }

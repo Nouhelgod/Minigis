@@ -300,12 +300,19 @@ namespace Minigis_Surkov
         private void getValueTool(MouseEventArgs e)
         {
             GeoPoint location = translateScreenToMap(e.Location);
+            List<GridLayer> grdLayers = new List<GridLayer>();
             foreach(Layer layer in layers)
                 if (layer is GridLayer)
                 {
                     {
-                        GridLayer gridLayer = (GridLayer)layer;
-                        Console.WriteLine(gridLayer.getValue(location));
+                        //GridLayer gridLayer = (GridLayer)layer;
+                        //Console.WriteLine(gridLayer.getValue(location));
+                        grdLayers.Add((GridLayer)layer);
+                    }
+
+                    foreach (GridLayer grdLayer in grdLayers)
+                    {
+                        Console.WriteLine(grdLayer.getValue(location));
                     }
                 }
         }

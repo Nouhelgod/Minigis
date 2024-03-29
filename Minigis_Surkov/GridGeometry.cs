@@ -1,4 +1,6 @@
-﻿namespace Minigis_Surkov
+﻿using System;
+
+namespace Minigis_Surkov
 {
     public class GridGeometry
     {
@@ -37,7 +39,7 @@
         public double[] findNearest(GeoPoint point)
         {
 
-            double[] nearest = new double[4];
+            double[] nearest = new double[6];
 
             // ===  
 
@@ -61,12 +63,14 @@
 
             //(x - xmin) / dist
 
-            double dX = point.x - originX;
-            double dY = point.y - originY;
-            nearest[0] = dX / distance;
-            nearest[1] = nearest[0] + distance;
-            nearest[2] = dY / distance;
-            nearest[3] = nearest[2] + distance;
+            double dX = (point.x - originX) / distance;
+            double dY = (point.y - originY) / distance;
+            nearest[0] = (int) dX;
+            nearest[1] = nearest[0] + 1;
+            nearest[2] = (int) dY;
+            nearest[3] = nearest[2] + 1;
+            nearest[4] = dX - nearest[0];
+            nearest[5] = dY - nearest[2];
 
             return nearest;
         }
