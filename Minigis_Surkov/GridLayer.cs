@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml.XPath;
+using System.IO;
 
 namespace Minigis_Surkov
 {
@@ -96,6 +97,53 @@ namespace Minigis_Surkov
             mesh = new double?[g.countY, g.countX];
 
         }    
+
+        public GridLayer(string filename)
+        {
+            string data = File.ReadAllText(filename);
+            string[] s = data.Split('\n');
+
+            string header = s[0];
+            data = s[1];
+            string[] data_ = data.Split(':');
+
+            string[] headers = header.Split(';');
+
+            this.name = headers[0];
+
+            this.geometry = new GridGeometry(
+                //count
+                int.Parse(headers[1]), 
+                int.Parse(headers[2]), 
+                
+                //dist
+                int.Parse(headers[3]),
+                
+                // origin
+                double.Parse(headers[4]), 
+                double.Parse(headers[5])
+                );
+
+            int ptr = 0;
+            for (int x = 0; x < this.geometry.countX; x++)
+            {
+                for (int y = 0; y < this.geometry.countY; y++)
+                {
+                    if (data_[ptr] != string.Empty)
+                    {
+                        this.geometry.nodeValues[x, y] = double.Parse(data_[ptr]);
+                    }
+                    else
+                    {
+                        this.geometry.nodeValues[x, y] = null;
+                    }
+
+                    ptr++;
+                }
+            }
+            bounds = new GeoRect(geometry.originX, geometry.originY, geometry.maxX, geometry.maxY);
+            this.findMinMaxNodeValue();
+        }
 
         public double? getValue(GeoPoint location)
         {
@@ -255,6 +303,30 @@ namespace Minigis_Surkov
                     gradientMap.SetPixel(i, j, c);
                 }
             }
+        }
+
+        internal void writeToFile(string name)
+        {
+            string data = "";
+            data += this.name; data += ";";
+            data += Geometry.countX; data += ";";
+            data += Geometry.countY; data += ";";
+            data += Geometry.distance; data += ";";
+            data += Geometry.originX; data += ";";
+            data += Geometry.originY; data += "\n";
+
+            for (int x = 0; x < Geometry.countX; x++)
+            {
+                for (int y = 0; y < Geometry.countY; y++)
+                {
+                    data += Geometry.nodeValues[x, y]; data += ":";
+                }
+            }
+
+            var file = File.CreateText(name);
+            file.Write(data);
+            file.Close();
+            
         }
     }
 }

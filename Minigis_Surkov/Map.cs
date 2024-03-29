@@ -300,7 +300,6 @@ namespace Minigis_Surkov
         private void getValueTool(MouseEventArgs e)
         {
             GeoPoint location = translateScreenToMap(e.Location);
-
             foreach(Layer layer in layers)
                 if (layer is GridLayer)
                 {

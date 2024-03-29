@@ -37,10 +37,14 @@ namespace Minigis_Surkov
             this.Select = new System.Windows.Forms.ToolStripButton();
             this.ZoomAll = new System.Windows.Forms.ToolStripButton();
             this.Measure = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.GetValue = new System.Windows.Forms.ToolStripButton();
             this.RestoreGrid = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.testRun = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripSplitButton1 = new System.Windows.Forms.ToolStripSplitButton();
+            this.minToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.maxToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.statusLabelX = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
@@ -50,14 +54,12 @@ namespace Minigis_Surkov
             this.activeToolLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.buttonAddLayer = new System.Windows.Forms.Button();
-            this.openLayerDialog = new System.Windows.Forms.OpenFileDialog();
-            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripSplitButton1 = new System.Windows.Forms.ToolStripSplitButton();
-            this.minToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.maxToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.colorDialogMain = new System.Windows.Forms.ColorDialog();
             this.layerControl1 = new Minigis_Surkov.LayerControl();
             this.map1 = new Minigis_Surkov.Map();
+            this.openLayerDialog = new System.Windows.Forms.OpenFileDialog();
+            this.colorDialogMain = new System.Windows.Forms.ColorDialog();
+            this.saveGridToFileButton = new System.Windows.Forms.ToolStripButton();
+            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.toolStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -80,6 +82,7 @@ namespace Minigis_Surkov
             this.GetValue,
             this.RestoreGrid,
             this.testRun,
+            this.saveGridToFileButton,
             this.toolStripSeparator2,
             this.toolStripSplitButton1});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
@@ -148,6 +151,11 @@ namespace Minigis_Surkov
             this.Measure.Text = "measure";
             this.Measure.Click += new System.EventHandler(this.Measure_Click);
             // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+            // 
             // GetValue
             // 
             this.GetValue.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -168,11 +176,6 @@ namespace Minigis_Surkov
             this.RestoreGrid.Text = "gridifyLayer";
             this.RestoreGrid.Click += new System.EventHandler(this.RestoreGrid_Click);
             // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
-            // 
             // testRun
             // 
             this.testRun.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -182,6 +185,39 @@ namespace Minigis_Surkov
             this.testRun.Size = new System.Drawing.Size(23, 22);
             this.testRun.Text = "toolStripButton1";
             this.testRun.Click += new System.EventHandler(this.testRun_Click);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
+            // 
+            // toolStripSplitButton1
+            // 
+            this.toolStripSplitButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripSplitButton1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.minToolStripMenuItem,
+            this.maxToolStripMenuItem});
+            this.toolStripSplitButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripSplitButton1.Image")));
+            this.toolStripSplitButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripSplitButton1.Name = "toolStripSplitButton1";
+            this.toolStripSplitButton1.Size = new System.Drawing.Size(32, 22);
+            this.toolStripSplitButton1.Text = "toolStripSplitButton1";
+            // 
+            // minToolStripMenuItem
+            // 
+            this.minToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI Black", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.minToolStripMenuItem.Name = "minToolStripMenuItem";
+            this.minToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
+            this.minToolStripMenuItem.Text = "Min";
+            this.minToolStripMenuItem.Click += new System.EventHandler(this.minToolStripMenuItem_Click);
+            // 
+            // maxToolStripMenuItem
+            // 
+            this.maxToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI Black", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.maxToolStripMenuItem.Name = "maxToolStripMenuItem";
+            this.maxToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
+            this.maxToolStripMenuItem.Text = "Max";
+            this.maxToolStripMenuItem.Click += new System.EventHandler(this.maxToolStripMenuItem_Click);
             // 
             // statusStrip1
             // 
@@ -266,43 +302,6 @@ namespace Minigis_Surkov
             this.buttonAddLayer.UseVisualStyleBackColor = true;
             this.buttonAddLayer.Click += new System.EventHandler(this.buttonAddLayer_Click);
             // 
-            // openLayerDialog
-            // 
-            this.openLayerDialog.FileName = "openFileDialog1";
-            // 
-            // toolStripSeparator2
-            // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
-            // 
-            // toolStripSplitButton1
-            // 
-            this.toolStripSplitButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripSplitButton1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.minToolStripMenuItem,
-            this.maxToolStripMenuItem});
-            this.toolStripSplitButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripSplitButton1.Image")));
-            this.toolStripSplitButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripSplitButton1.Name = "toolStripSplitButton1";
-            this.toolStripSplitButton1.Size = new System.Drawing.Size(32, 22);
-            this.toolStripSplitButton1.Text = "toolStripSplitButton1";
-            // 
-            // minToolStripMenuItem
-            // 
-            this.minToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI Black", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.minToolStripMenuItem.Name = "minToolStripMenuItem";
-            this.minToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.minToolStripMenuItem.Text = "Min";
-            this.minToolStripMenuItem.Click += new System.EventHandler(this.minToolStripMenuItem_Click);
-            // 
-            // maxToolStripMenuItem
-            // 
-            this.maxToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI Black", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.maxToolStripMenuItem.Name = "maxToolStripMenuItem";
-            this.maxToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.maxToolStripMenuItem.Text = "Max";
-            this.maxToolStripMenuItem.Click += new System.EventHandler(this.maxToolStripMenuItem_Click);
-            // 
             // layerControl1
             // 
             this.layerControl1.BackColor = System.Drawing.Color.Silver;
@@ -322,6 +321,24 @@ namespace Minigis_Surkov
             this.map1.TabIndex = 3;
             this.map1.Load += new System.EventHandler(this.map1_Load_1);
             this.map1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.map1_MouseMove);
+            // 
+            // openLayerDialog
+            // 
+            this.openLayerDialog.FileName = "openFileDialog1";
+            // 
+            // saveGridToFileButton
+            // 
+            this.saveGridToFileButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.saveGridToFileButton.Image = ((System.Drawing.Image)(resources.GetObject("saveGridToFileButton.Image")));
+            this.saveGridToFileButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.saveGridToFileButton.Name = "saveGridToFileButton";
+            this.saveGridToFileButton.Size = new System.Drawing.Size(23, 22);
+            this.saveGridToFileButton.Text = "saveGridToFile";
+            this.saveGridToFileButton.Click += new System.EventHandler(this.saveGridToFileButton_Click);
+            // 
+            // saveFileDialog1
+            // 
+            this.saveFileDialog1.Filter = "Grid layers (*.grd) | *.grd";
             // 
             // Form1
             // 
@@ -376,6 +393,8 @@ namespace Minigis_Surkov
         private System.Windows.Forms.ToolStripMenuItem minToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem maxToolStripMenuItem;
         private System.Windows.Forms.ColorDialog colorDialogMain;
+        private System.Windows.Forms.ToolStripButton saveGridToFileButton;
+        private System.Windows.Forms.SaveFileDialog saveFileDialog1;
     }
 }
 

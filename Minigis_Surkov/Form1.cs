@@ -106,7 +106,7 @@ namespace Minigis_Surkov
                         }
                         var filepath = openLayerDialog.FileName;
 
-                        VectorLayer imported = null;
+                        Layer imported = null;
 
                         if (fileExtension.ToLower() == ".mif")
                         {
@@ -116,7 +116,12 @@ namespace Minigis_Surkov
                         {
                             imported = new VectorLayer().parseCSVFile(filepath);
                         } 
-                        
+                        else if (fileExtension.ToLower() == ".grd")
+                        {
+                            imported = new GridLayer(filepath);
+                        }
+
+
                         map1.appendLayer(imported);
                         map1.Refresh();
                         layerControl1.refreshList();
@@ -186,7 +191,7 @@ namespace Minigis_Surkov
 
             for (int pow = 1; pow <= 5; pow++)
             {
-                gridTestLayer = GridLayer.restoreGrid(vectorTestLayer, cellSize: DISTANCE, geometry: testGeometry, radius: 300, power: pow);
+                gridTestLayer = GridLayer.restoreGrid(vectorTestLayer, cellSize: DISTANCE, geometry: testGeometry, radius: 1000, power: pow);
                 restoredGeometry[pow - 1] = gridTestLayer.Geometry;
             }
 
@@ -211,8 +216,6 @@ namespace Minigis_Surkov
             gridTestLayer.Geometry = finalGeometry;
             gridTestLayer.findMinMaxNodeValue();
             gridTestLayer.name = "test-grid-layer";
-            vectorTestLayer.isVisible = false;
-            vectorTestLayer.name = "test-csv-layer";
 
             map1.appendLayer(gridTestLayer);
             map1.layerControl.refreshList();
@@ -248,6 +251,25 @@ namespace Minigis_Surkov
                 maxToolStripMenuItem.BackColor = colorDialogMain.Color;
                 map1.gridColors.IsModified = true;
             }
+        }
+
+        private void saveGridToFileButton_Click(object sender, EventArgs e)
+        {
+            if (!(layerControl1.SelectedLayer is GridLayer))
+            {
+                MessageBox.Show("Select exactly one grid layer to proceed", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            GridLayer affectedLayer = layerControl1.SelectedLayer as GridLayer;
+            if (saveFileDialog1.ShowDialog() != DialogResult.OK)
+            {
+                return;
+            }
+
+            string filepath = saveFileDialog1.FileName;
+            affectedLayer.writeToFile(filepath);
+
         }
     }
 
