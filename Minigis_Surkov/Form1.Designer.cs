@@ -41,6 +41,7 @@ namespace Minigis_Surkov
             this.GetValue = new System.Windows.Forms.ToolStripButton();
             this.RestoreGrid = new System.Windows.Forms.ToolStripButton();
             this.testRun = new System.Windows.Forms.ToolStripButton();
+            this.saveGridToFileButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripSplitButton1 = new System.Windows.Forms.ToolStripSplitButton();
             this.minToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -55,10 +56,10 @@ namespace Minigis_Surkov
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.buttonAddLayer = new System.Windows.Forms.Button();
             this.layerControl1 = new Minigis_Surkov.LayerControl();
+            this.LabelValue = new System.Windows.Forms.Label();
             this.map1 = new Minigis_Surkov.Map();
             this.openLayerDialog = new System.Windows.Forms.OpenFileDialog();
             this.colorDialogMain = new System.Windows.Forms.ColorDialog();
-            this.saveGridToFileButton = new System.Windows.Forms.ToolStripButton();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.toolStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
@@ -87,9 +88,10 @@ namespace Minigis_Surkov
             this.toolStripSplitButton1});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(896, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(1195, 25);
             this.toolStrip1.TabIndex = 0;
             this.toolStrip1.Text = "toolStrip1";
+            this.toolStrip1.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.toolStrip1_ItemClicked);
             // 
             // Pan
             // 
@@ -186,6 +188,16 @@ namespace Minigis_Surkov
             this.testRun.Text = "toolStripButton1";
             this.testRun.Click += new System.EventHandler(this.testRun_Click);
             // 
+            // saveGridToFileButton
+            // 
+            this.saveGridToFileButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.saveGridToFileButton.Image = ((System.Drawing.Image)(resources.GetObject("saveGridToFileButton.Image")));
+            this.saveGridToFileButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.saveGridToFileButton.Name = "saveGridToFileButton";
+            this.saveGridToFileButton.Size = new System.Drawing.Size(23, 22);
+            this.saveGridToFileButton.Text = "saveGridToFile";
+            this.saveGridToFileButton.Click += new System.EventHandler(this.saveGridToFileButton_Click);
+            // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
@@ -229,9 +241,10 @@ namespace Minigis_Surkov
             this.toolStripStatusLabel3,
             this.statusLabelMS,
             this.activeToolLabel});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 500);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 620);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(896, 22);
+            this.statusStrip1.Padding = new System.Windows.Forms.Padding(1, 0, 19, 0);
+            this.statusStrip1.Size = new System.Drawing.Size(1195, 22);
             this.statusStrip1.TabIndex = 1;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -267,7 +280,7 @@ namespace Minigis_Surkov
             // activeToolLabel
             // 
             this.activeToolLabel.Name = "activeToolLabel";
-            this.activeToolLabel.Size = new System.Drawing.Size(46, 17);
+            this.activeToolLabel.Size = new System.Drawing.Size(48, 17);
             this.activeToolLabel.Text = "✋ | Pan";
             // 
             // splitContainer1
@@ -275,6 +288,7 @@ namespace Minigis_Surkov
             this.splitContainer1.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitContainer1.Location = new System.Drawing.Point(0, 25);
+            this.splitContainer1.Margin = new System.Windows.Forms.Padding(4);
             this.splitContainer1.Name = "splitContainer1";
             // 
             // splitContainer1.Panel1
@@ -286,17 +300,20 @@ namespace Minigis_Surkov
             // 
             // splitContainer1.Panel2
             // 
+            this.splitContainer1.Panel2.Controls.Add(this.LabelValue);
             this.splitContainer1.Panel2.Controls.Add(this.map1);
-            this.splitContainer1.Size = new System.Drawing.Size(896, 475);
-            this.splitContainer1.SplitterDistance = 150;
+            this.splitContainer1.Size = new System.Drawing.Size(1195, 595);
+            this.splitContainer1.SplitterDistance = 200;
+            this.splitContainer1.SplitterWidth = 5;
             this.splitContainer1.TabIndex = 2;
             // 
             // buttonAddLayer
             // 
             this.buttonAddLayer.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.buttonAddLayer.Location = new System.Drawing.Point(0, 452);
+            this.buttonAddLayer.Location = new System.Drawing.Point(0, 567);
+            this.buttonAddLayer.Margin = new System.Windows.Forms.Padding(4);
             this.buttonAddLayer.Name = "buttonAddLayer";
-            this.buttonAddLayer.Size = new System.Drawing.Size(150, 23);
+            this.buttonAddLayer.Size = new System.Drawing.Size(200, 28);
             this.buttonAddLayer.TabIndex = 3;
             this.buttonAddLayer.Text = "Add layer";
             this.buttonAddLayer.UseVisualStyleBackColor = true;
@@ -307,17 +324,28 @@ namespace Minigis_Surkov
             this.layerControl1.BackColor = System.Drawing.Color.Silver;
             this.layerControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.layerControl1.Location = new System.Drawing.Point(0, 0);
+            this.layerControl1.Margin = new System.Windows.Forms.Padding(5);
             this.layerControl1.Name = "layerControl1";
-            this.layerControl1.Size = new System.Drawing.Size(150, 475);
+            this.layerControl1.Size = new System.Drawing.Size(200, 595);
             this.layerControl1.TabIndex = 0;
             this.layerControl1.Load += new System.EventHandler(this.layerControl1_Load);
+            // 
+            // LabelValue
+            // 
+            this.LabelValue.AutoSize = true;
+            this.LabelValue.Dock = System.Windows.Forms.DockStyle.Right;
+            this.LabelValue.Location = new System.Drawing.Point(990, 0);
+            this.LabelValue.Name = "LabelValue";
+            this.LabelValue.Size = new System.Drawing.Size(0, 16);
+            this.LabelValue.TabIndex = 4;
             // 
             // map1
             // 
             this.map1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.map1.Location = new System.Drawing.Point(0, 0);
+            this.map1.Margin = new System.Windows.Forms.Padding(5);
             this.map1.Name = "map1";
-            this.map1.Size = new System.Drawing.Size(742, 475);
+            this.map1.Size = new System.Drawing.Size(990, 595);
             this.map1.TabIndex = 3;
             this.map1.Load += new System.EventHandler(this.map1_Load_1);
             this.map1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.map1_MouseMove);
@@ -326,28 +354,19 @@ namespace Minigis_Surkov
             // 
             this.openLayerDialog.FileName = "openFileDialog1";
             // 
-            // saveGridToFileButton
-            // 
-            this.saveGridToFileButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.saveGridToFileButton.Image = ((System.Drawing.Image)(resources.GetObject("saveGridToFileButton.Image")));
-            this.saveGridToFileButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.saveGridToFileButton.Name = "saveGridToFileButton";
-            this.saveGridToFileButton.Size = new System.Drawing.Size(23, 22);
-            this.saveGridToFileButton.Text = "saveGridToFile";
-            this.saveGridToFileButton.Click += new System.EventHandler(this.saveGridToFileButton_Click);
-            // 
             // saveFileDialog1
             // 
             this.saveFileDialog1.Filter = "Grid layers (*.grd) | *.grd";
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(896, 522);
+            this.ClientSize = new System.Drawing.Size(1195, 642);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.toolStrip1);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Form1";
             this.Text = "MINIgis-Surkov";
             this.toolStrip1.ResumeLayout(false);
@@ -356,6 +375,7 @@ namespace Minigis_Surkov
             this.statusStrip1.PerformLayout();
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
+            this.splitContainer1.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -395,6 +415,7 @@ namespace Minigis_Surkov
         private System.Windows.Forms.ColorDialog colorDialogMain;
         private System.Windows.Forms.ToolStripButton saveGridToFileButton;
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
+        private System.Windows.Forms.Label LabelValue;
     }
 }
 

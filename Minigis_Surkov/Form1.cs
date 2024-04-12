@@ -205,7 +205,7 @@ namespace Minigis_Surkov
                     {
                         finalGeometry.nodeValues[x, y] += restoredGeometry[i].nodeValues[x, y];
 
-                        if (i == 4)
+                        if (i + 1 == restoredGeometry.Length)
                         {
                             finalGeometry.nodeValues[x, y] /= 5;
                         }
@@ -270,6 +270,11 @@ namespace Minigis_Surkov
             string filepath = saveFileDialog1.FileName;
             affectedLayer.writeToFile(filepath);
 
+        }
+
+        private void toolStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+            map1.clearLabel();
         }
     }
 

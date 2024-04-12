@@ -305,16 +305,22 @@ namespace Minigis_Surkov
                 if (layer is GridLayer)
                 {
                     {
-                        //GridLayer gridLayer = (GridLayer)layer;
-                        //Console.WriteLine(gridLayer.getValue(location));
                         grdLayers.Add((GridLayer)layer);
+
                     }
+
+                    clearLabel();
 
                     foreach (GridLayer grdLayer in grdLayers)
                     {
-                        Console.WriteLine(grdLayer.getValue(location));
+                        LabelValue.Text += grdLayer.name + " = " + grdLayer.getValue(location) + '\n';
                     }
                 }
+        }
+
+        public void clearLabel()
+        {
+            LabelValue.Text = "";
         }
 
         private void measureTool(MouseEventArgs e)
