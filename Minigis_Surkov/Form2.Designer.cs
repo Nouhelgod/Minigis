@@ -41,6 +41,9 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
+            this.kfactor = new System.Windows.Forms.NumericUpDown();
+            this.label7 = new System.Windows.Forms.Label();
+            ((System.ComponentModel.ISupportInitialize)(this.kfactor)).BeginInit();
             this.SuspendLayout();
             // 
             // label2
@@ -113,7 +116,7 @@
             // 
             // textRadius
             // 
-            this.textRadius.Location = new System.Drawing.Point(336, 76);
+            this.textRadius.Location = new System.Drawing.Point(336, 64);
             this.textRadius.Name = "textRadius";
             this.textRadius.Size = new System.Drawing.Size(100, 20);
             this.textRadius.TabIndex = 10;
@@ -139,7 +142,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(333, 60);
+            this.label6.Location = new System.Drawing.Point(333, 48);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(40, 13);
             this.label6.TabIndex = 13;
@@ -148,7 +151,7 @@
             // button1
             // 
             this.button1.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.button1.Location = new System.Drawing.Point(336, 106);
+            this.button1.Location = new System.Drawing.Point(336, 128);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(100, 23);
             this.button1.TabIndex = 14;
@@ -156,11 +159,44 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
+            // kfactor
+            // 
+            this.kfactor.Location = new System.Drawing.Point(336, 103);
+            this.kfactor.Maximum = new decimal(new int[] {
+            6,
+            0,
+            0,
+            0});
+            this.kfactor.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.kfactor.Name = "kfactor";
+            this.kfactor.Size = new System.Drawing.Size(100, 20);
+            this.kfactor.TabIndex = 15;
+            this.kfactor.Value = new decimal(new int[] {
+            2,
+            0,
+            0,
+            0});
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(336, 87);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(44, 13);
+            this.label7.TabIndex = 16;
+            this.label7.Text = "K factor";
+            // 
             // formGridTune
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(457, 141);
+            this.ClientSize = new System.Drawing.Size(457, 229);
+            this.Controls.Add(this.label7);
+            this.Controls.Add(this.kfactor);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label1);
@@ -176,6 +212,7 @@
             this.Controls.Add(this.label2);
             this.Name = "formGridTune";
             this.Text = "Model recalculation";
+            ((System.ComponentModel.ISupportInitialize)(this.kfactor)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -196,5 +233,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.NumericUpDown kfactor;
+        private System.Windows.Forms.Label label7;
     }
 }

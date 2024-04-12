@@ -299,21 +299,20 @@ namespace Minigis_Surkov
         // Tools
         private void getValueTool(MouseEventArgs e)
         {
+            clearLabel();
             GeoPoint location = translateScreenToMap(e.Location);
             List<GridLayer> grdLayers = new List<GridLayer>();
             foreach(Layer layer in layers)
-                if (layer is GridLayer)
+                if (layer is GridLayer && layer.isVisible)
                 {
                     {
-                        grdLayers.Add((GridLayer)layer);
+                        var grdLayer = (GridLayer)layer;
+                        var value = grdLayer.getValue(location);
 
-                    }
-
-                    clearLabel();
-
-                    foreach (GridLayer grdLayer in grdLayers)
-                    {
-                        LabelValue.Text += grdLayer.name + " = " + grdLayer.getValue(location) + '\n';
+                        if (value != null)
+                        {
+                            LabelValue.Text += grdLayer.name + " = " + grdLayer.getValue(location) + '\n';
+                        }
                     }
                 }
         }

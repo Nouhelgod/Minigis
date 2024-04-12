@@ -120,8 +120,8 @@ namespace Minigis_Surkov
                 int.Parse(headers[3]),
                 
                 // origin
-                double.Parse(headers[4]), 
-                double.Parse(headers[5])
+                double.Parse(headers[4], System.Globalization.CultureInfo.InvariantCulture), 
+                double.Parse(headers[5], System.Globalization.CultureInfo.InvariantCulture)
                 );
 
             int ptr = 0;
@@ -131,7 +131,7 @@ namespace Minigis_Surkov
                 {
                     if (data_[ptr] != string.Empty)
                     {
-                        this.geometry.nodeValues[x, y] = double.Parse(data_[ptr]);
+                        this.geometry.nodeValues[x, y] = double.Parse(data_[ptr], System.Globalization.CultureInfo.InvariantCulture);
                     }
                     else
                     {
@@ -147,7 +147,7 @@ namespace Minigis_Surkov
 
         public double? getValue(GeoPoint location)
         {
-            if (!GeoRect.isIntersect(bounds, location)) { return 0; }
+            if (!GeoRect.isIntersect(bounds, location)) { return null; }
 
             double[] nearest = geometry.findNearest(location);
 
@@ -323,15 +323,20 @@ namespace Minigis_Surkov
             data += this.name; data += ";";
             data += Geometry.countX; data += ";";
             data += Geometry.countY; data += ";";
-            data += Geometry.distance; data += ";";
-            data += Geometry.originX; data += ";";
-            data += Geometry.originY; data += "\n";
+            data += Geometry.distance.ToString(System.Globalization.CultureInfo.InvariantCulture); data += ";";
+            data += Geometry.originX.ToString(System.Globalization.CultureInfo.InvariantCulture); data += ";";
+            data += Geometry.originY.ToString(System.Globalization.CultureInfo.InvariantCulture); data += "\n";
 
             for (int x = 0; x < Geometry.countX; x++)
             {
                 for (int y = 0; y < Geometry.countY; y++)
                 {
-                    data += Geometry.nodeValues[x, y]; data += ":";
+                    if (Geometry.nodeValues[x, y] != null) {
+                        double val = (double)Geometry.nodeValues[x, y];
+                        data += val.ToString(System.Globalization.CultureInfo.InvariantCulture); 
+                    }
+
+                data += ":";
                 }
             }
 

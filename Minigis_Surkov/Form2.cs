@@ -19,6 +19,7 @@ namespace Minigis_Surkov
         public double marginEast;
         public double radius;
         public double cellSize;
+        public int power;
 
         public formGridTune()
         {
@@ -33,6 +34,7 @@ namespace Minigis_Surkov
             marginWest = double.Parse(textWest.Text);   
             radius = double.Parse(textRadius.Text);
             cellSize = double.Parse(textCellSize.Text);
+            power = (int)kfactor.Value;
         }
     }
 }

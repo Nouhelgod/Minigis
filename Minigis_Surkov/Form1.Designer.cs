@@ -55,12 +55,12 @@ namespace Minigis_Surkov
             this.activeToolLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.buttonAddLayer = new System.Windows.Forms.Button();
-            this.layerControl1 = new Minigis_Surkov.LayerControl();
             this.LabelValue = new System.Windows.Forms.Label();
-            this.map1 = new Minigis_Surkov.Map();
             this.openLayerDialog = new System.Windows.Forms.OpenFileDialog();
             this.colorDialogMain = new System.Windows.Forms.ColorDialog();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
+            this.layerControl1 = new Minigis_Surkov.LayerControl();
+            this.map1 = new Minigis_Surkov.Map();
             this.toolStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -88,7 +88,7 @@ namespace Minigis_Surkov
             this.toolStripSplitButton1});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(1195, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(896, 25);
             this.toolStrip1.TabIndex = 0;
             this.toolStrip1.Text = "toolStrip1";
             this.toolStrip1.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.toolStrip1_ItemClicked);
@@ -110,7 +110,7 @@ namespace Minigis_Surkov
             this.ZoomIn.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.ZoomIn.Name = "ZoomIn";
             this.ZoomIn.Size = new System.Drawing.Size(23, 22);
-            this.ZoomIn.Text = "ZoomIn";
+            this.ZoomIn.Text = "Zoom in";
             this.ZoomIn.Click += new System.EventHandler(this.ZoomIn_Click);
             // 
             // ZoomOut
@@ -120,7 +120,7 @@ namespace Minigis_Surkov
             this.ZoomOut.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.ZoomOut.Name = "ZoomOut";
             this.ZoomOut.Size = new System.Drawing.Size(23, 22);
-            this.ZoomOut.Text = "ZoomOut";
+            this.ZoomOut.Text = "Zoom out";
             this.ZoomOut.Click += new System.EventHandler(this.ZoomOut_Click);
             // 
             // Select
@@ -140,7 +140,7 @@ namespace Minigis_Surkov
             this.ZoomAll.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.ZoomAll.Name = "ZoomAll";
             this.ZoomAll.Size = new System.Drawing.Size(23, 22);
-            this.ZoomAll.Text = "ZoomAll";
+            this.ZoomAll.Text = "Fit";
             this.ZoomAll.Click += new System.EventHandler(this.ZoomAll_Click);
             // 
             // Measure
@@ -150,7 +150,7 @@ namespace Minigis_Surkov
             this.Measure.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.Measure.Name = "Measure";
             this.Measure.Size = new System.Drawing.Size(23, 22);
-            this.Measure.Text = "measure";
+            this.Measure.Text = "Measure";
             this.Measure.Click += new System.EventHandler(this.Measure_Click);
             // 
             // toolStripSeparator1
@@ -165,7 +165,7 @@ namespace Minigis_Surkov
             this.GetValue.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.GetValue.Name = "GetValue";
             this.GetValue.Size = new System.Drawing.Size(23, 22);
-            this.GetValue.Text = "getValue";
+            this.GetValue.Text = "Extract value from grid layer";
             this.GetValue.Click += new System.EventHandler(this.GetValue_Click);
             // 
             // RestoreGrid
@@ -175,7 +175,7 @@ namespace Minigis_Surkov
             this.RestoreGrid.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.RestoreGrid.Name = "RestoreGrid";
             this.RestoreGrid.Size = new System.Drawing.Size(23, 22);
-            this.RestoreGrid.Text = "gridifyLayer";
+            this.RestoreGrid.Text = "Gridify layer";
             this.RestoreGrid.Click += new System.EventHandler(this.RestoreGrid_Click);
             // 
             // testRun
@@ -185,7 +185,7 @@ namespace Minigis_Surkov
             this.testRun.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.testRun.Name = "testRun";
             this.testRun.Size = new System.Drawing.Size(23, 22);
-            this.testRun.Text = "toolStripButton1";
+            this.testRun.Text = "Run test ";
             this.testRun.Click += new System.EventHandler(this.testRun_Click);
             // 
             // saveGridToFileButton
@@ -195,7 +195,7 @@ namespace Minigis_Surkov
             this.saveGridToFileButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.saveGridToFileButton.Name = "saveGridToFileButton";
             this.saveGridToFileButton.Size = new System.Drawing.Size(23, 22);
-            this.saveGridToFileButton.Text = "saveGridToFile";
+            this.saveGridToFileButton.Text = "Save grid layer to file";
             this.saveGridToFileButton.Click += new System.EventHandler(this.saveGridToFileButton_Click);
             // 
             // toolStripSeparator2
@@ -213,13 +213,13 @@ namespace Minigis_Surkov
             this.toolStripSplitButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripSplitButton1.Name = "toolStripSplitButton1";
             this.toolStripSplitButton1.Size = new System.Drawing.Size(32, 22);
-            this.toolStripSplitButton1.Text = "toolStripSplitButton1";
+            this.toolStripSplitButton1.Text = "Change colors";
             // 
             // minToolStripMenuItem
             // 
             this.minToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI Black", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.minToolStripMenuItem.Name = "minToolStripMenuItem";
-            this.minToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
+            this.minToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.minToolStripMenuItem.Text = "Min";
             this.minToolStripMenuItem.Click += new System.EventHandler(this.minToolStripMenuItem_Click);
             // 
@@ -227,7 +227,7 @@ namespace Minigis_Surkov
             // 
             this.maxToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI Black", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.maxToolStripMenuItem.Name = "maxToolStripMenuItem";
-            this.maxToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
+            this.maxToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.maxToolStripMenuItem.Text = "Max";
             this.maxToolStripMenuItem.Click += new System.EventHandler(this.maxToolStripMenuItem_Click);
             // 
@@ -241,10 +241,9 @@ namespace Minigis_Surkov
             this.toolStripStatusLabel3,
             this.statusLabelMS,
             this.activeToolLabel});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 620);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 500);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Padding = new System.Windows.Forms.Padding(1, 0, 19, 0);
-            this.statusStrip1.Size = new System.Drawing.Size(1195, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(896, 22);
             this.statusStrip1.TabIndex = 1;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -280,7 +279,7 @@ namespace Minigis_Surkov
             // activeToolLabel
             // 
             this.activeToolLabel.Name = "activeToolLabel";
-            this.activeToolLabel.Size = new System.Drawing.Size(48, 17);
+            this.activeToolLabel.Size = new System.Drawing.Size(46, 17);
             this.activeToolLabel.Text = "✋ | Pan";
             // 
             // splitContainer1
@@ -288,7 +287,6 @@ namespace Minigis_Surkov
             this.splitContainer1.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitContainer1.Location = new System.Drawing.Point(0, 25);
-            this.splitContainer1.Margin = new System.Windows.Forms.Padding(4);
             this.splitContainer1.Name = "splitContainer1";
             // 
             // splitContainer1.Panel1
@@ -302,53 +300,30 @@ namespace Minigis_Surkov
             // 
             this.splitContainer1.Panel2.Controls.Add(this.LabelValue);
             this.splitContainer1.Panel2.Controls.Add(this.map1);
-            this.splitContainer1.Size = new System.Drawing.Size(1195, 595);
-            this.splitContainer1.SplitterDistance = 200;
-            this.splitContainer1.SplitterWidth = 5;
+            this.splitContainer1.Size = new System.Drawing.Size(896, 475);
+            this.splitContainer1.SplitterDistance = 149;
             this.splitContainer1.TabIndex = 2;
             // 
             // buttonAddLayer
             // 
             this.buttonAddLayer.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.buttonAddLayer.Location = new System.Drawing.Point(0, 567);
-            this.buttonAddLayer.Margin = new System.Windows.Forms.Padding(4);
+            this.buttonAddLayer.Location = new System.Drawing.Point(0, 452);
             this.buttonAddLayer.Name = "buttonAddLayer";
-            this.buttonAddLayer.Size = new System.Drawing.Size(200, 28);
+            this.buttonAddLayer.Size = new System.Drawing.Size(149, 23);
             this.buttonAddLayer.TabIndex = 3;
             this.buttonAddLayer.Text = "Add layer";
             this.buttonAddLayer.UseVisualStyleBackColor = true;
             this.buttonAddLayer.Click += new System.EventHandler(this.buttonAddLayer_Click);
             // 
-            // layerControl1
-            // 
-            this.layerControl1.BackColor = System.Drawing.Color.Silver;
-            this.layerControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.layerControl1.Location = new System.Drawing.Point(0, 0);
-            this.layerControl1.Margin = new System.Windows.Forms.Padding(5);
-            this.layerControl1.Name = "layerControl1";
-            this.layerControl1.Size = new System.Drawing.Size(200, 595);
-            this.layerControl1.TabIndex = 0;
-            this.layerControl1.Load += new System.EventHandler(this.layerControl1_Load);
-            // 
             // LabelValue
             // 
             this.LabelValue.AutoSize = true;
             this.LabelValue.Dock = System.Windows.Forms.DockStyle.Right;
-            this.LabelValue.Location = new System.Drawing.Point(990, 0);
+            this.LabelValue.Location = new System.Drawing.Point(743, 0);
+            this.LabelValue.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.LabelValue.Name = "LabelValue";
-            this.LabelValue.Size = new System.Drawing.Size(0, 16);
+            this.LabelValue.Size = new System.Drawing.Size(0, 13);
             this.LabelValue.TabIndex = 4;
-            // 
-            // map1
-            // 
-            this.map1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.map1.Location = new System.Drawing.Point(0, 0);
-            this.map1.Margin = new System.Windows.Forms.Padding(5);
-            this.map1.Name = "map1";
-            this.map1.Size = new System.Drawing.Size(990, 595);
-            this.map1.TabIndex = 3;
-            this.map1.Load += new System.EventHandler(this.map1_Load_1);
-            this.map1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.map1_MouseMove);
             // 
             // openLayerDialog
             // 
@@ -358,15 +333,36 @@ namespace Minigis_Surkov
             // 
             this.saveFileDialog1.Filter = "Grid layers (*.grd) | *.grd";
             // 
+            // layerControl1
+            // 
+            this.layerControl1.BackColor = System.Drawing.Color.Silver;
+            this.layerControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.layerControl1.Location = new System.Drawing.Point(0, 0);
+            this.layerControl1.Margin = new System.Windows.Forms.Padding(4);
+            this.layerControl1.Name = "layerControl1";
+            this.layerControl1.Size = new System.Drawing.Size(149, 475);
+            this.layerControl1.TabIndex = 0;
+            this.layerControl1.Load += new System.EventHandler(this.layerControl1_Load);
+            // 
+            // map1
+            // 
+            this.map1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.map1.Location = new System.Drawing.Point(0, 0);
+            this.map1.Margin = new System.Windows.Forms.Padding(4);
+            this.map1.Name = "map1";
+            this.map1.Size = new System.Drawing.Size(743, 475);
+            this.map1.TabIndex = 3;
+            this.map1.Load += new System.EventHandler(this.map1_Load_1);
+            this.map1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.map1_MouseMove);
+            // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1195, 642);
+            this.ClientSize = new System.Drawing.Size(896, 522);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.toolStrip1);
-            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Form1";
             this.Text = "MINIgis-Surkov";
             this.toolStrip1.ResumeLayout(false);

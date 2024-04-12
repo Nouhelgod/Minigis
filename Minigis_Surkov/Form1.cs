@@ -137,7 +137,7 @@ namespace Minigis_Surkov
         private void GetValue_Click(object sender, EventArgs e)
         {
             Map.tool = ActiveTool.GetValue;
-            activeToolLabel.Text = "GET VALUE TOOL";
+            activeToolLabel.Text = "👇 | Extract value from grid";
         }
 
         private void RestoreGrid_Click(object sender, EventArgs e)
@@ -163,8 +163,9 @@ namespace Minigis_Surkov
             affectedLayer.bounds.maxX -= tuneForm.marginEast;
             affectedLayer.bounds.minY += tuneForm.marginNorth;
             affectedLayer.bounds.maxY -= tuneForm.marginSouth;
+            
 
-            generatedLayer = GridLayer.restoreGrid(affectedLayer, cellSize: tuneForm.cellSize, radius: tuneForm.radius);
+            generatedLayer = GridLayer.restoreGrid(affectedLayer, cellSize: tuneForm.cellSize, radius: tuneForm.radius, power: tuneForm.power);
             generatedLayer.name = affectedLayer.name + " mesh";
             generatedLayer.map = affectedLayer.map;
             map1.layers.Add(generatedLayer);
@@ -186,32 +187,39 @@ namespace Minigis_Surkov
                 vectorTestLayer.bounds.minX, 
                 vectorTestLayer.bounds.minY);
             GridLayer gridTestLayer = new GridLayer(testGeometry);
-
-            GridGeometry[] restoredGeometry = new GridGeometry[5];
+           
+            GridGeometry finalGeometry = new GridGeometry(
+                WIDTH, HEIGHT, DISTANCE,
+                vectorTestLayer.bounds.minX,
+                vectorTestLayer.bounds.minY);
 
             for (int pow = 1; pow <= 5; pow++)
             {
                 gridTestLayer = GridLayer.restoreGrid(vectorTestLayer, cellSize: DISTANCE, geometry: testGeometry, radius: 1000, power: pow);
-                restoredGeometry[pow - 1] = gridTestLayer.Geometry;
-            }
-
-            GridGeometry finalGeometry = testGeometry;
-
-            for (int i = 0; i < restoredGeometry.Length; i++)
-            {
+                //restoredGeometry[pow - 1] = gridTestLayer.Geometry;
                 for(int x = 0; x < finalGeometry.countX; x++)
                 {
                     for(int y = 0; y < finalGeometry.countY; y++)
                     {
-                        finalGeometry.nodeValues[x, y] += restoredGeometry[i].nodeValues[x, y];
-
-                        if (i + 1 == restoredGeometry.Length)
+                        if (finalGeometry.nodeValues[x, y] == null)
                         {
-                            finalGeometry.nodeValues[x, y] /= 5;
+                            finalGeometry.nodeValues[x, y] = 0;
+                        } 
+                        finalGeometry.nodeValues[x, y] += gridTestLayer.Geometry.nodeValues[x, y];
+
+                        if (pow == 5)
+                        {
+                            finalGeometry.nodeValues[x, y] /= pow;
                         }
                     }
                 }
             }
+
+
+
+            //for (int i = 0; i < restoredGeometry.Length; i++)
+            //{
+            //}
 
             gridTestLayer.Geometry = finalGeometry;
             gridTestLayer.findMinMaxNodeValue();
